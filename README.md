@@ -1,91 +1,68 @@
-# Nightframe Art Gallery
+# ArtZ Gallery — GitHub Pages + Supabase
 
-A responsive, dependency-free art portfolio designed for GitHub Pages.
+This folder is ready to publish. It is already connected to your Supabase project.
 
-## What is included
+## What it does
 
-- Responsive gallery layout
-- Artwork category filters
-- Full-screen lightbox
-- Keyboard navigation in the lightbox
-- Mobile navigation
-- Accessible labels and reduced-motion support
-- Local placeholder art, so the site works without external image hosting
+- Public responsive art gallery
+- Artist login using your Supabase email and password
+- Click or drag an image from your computer
+- Add a title, category, and description
+- Publish instantly without editing GitHub each time
+- Edit artwork details
+- Delete artwork and its stored image
+- Full-screen lightbox and category filters
 
-## Customize the site
+## Upload this website to GitHub
 
-### 1. Change the gallery name and text
+1. Extract the ZIP file.
+2. Open the extracted `ArtZGallery-Supabase` folder.
+3. In your empty GitHub repository, click **uploading an existing file**.
+4. Drag everything inside this folder onto GitHub:
+   - `index.html`
+   - `styles.css`
+   - `app.js`
+   - `README.md`
+   - `.nojekyll`
+   - the `assets` folder
+5. Click **Commit changes**.
 
-Open `index.html` and replace:
+`index.html` must be at the top level of the repository, not inside another folder.
 
-- `Nightframe`
-- `Your Name`
-- The hero introduction
-- The artist statement
-- `artist@example.com`
+## Turn on GitHub Pages
 
-### 2. Add your own artwork
+1. Open the repository's **Settings**.
+2. Click **Pages** in the left sidebar.
+3. Under **Build and deployment**, choose **Deploy from a branch**.
+4. Select branch **main** and folder **/(root)**.
+5. Click **Save**.
 
-Put your image files inside the `assets` folder. JPG, PNG, WebP, AVIF, SVG, and GIF files all work in modern browsers.
+GitHub will show the public website address after deployment finishes.
 
-Then open `script.js` and edit the `artworks` array near the top:
+## Upload artwork
 
-```js
-{
-  title: "Artwork title",
-  category: "character",
-  image: "assets/your-image.webp",
-  alt: "A useful visual description of the artwork",
-  description: "A short caption or note about the piece.",
-  ratio: "4 / 5"
-}
-```
+1. Open your published website.
+2. Click **Artist login** or **Upload artwork**.
+3. Sign in with the email and password you created under Supabase Authentication.
+4. Click the image area and select an image from your computer, or drag the image onto it.
+5. Enter its title, category, and optional description.
+6. Click **Publish artwork**.
 
-Available categories in the starter site are:
+Images are limited to 6 MB in this version for reliable browser uploads.
 
-- `character`
-- `environment`
-- `concept`
+## Customize your public text
 
-To create another category, add another filter button in `index.html` and use the same value in your artwork entry.
+Open `index.html` on GitHub and click the pencil icon to edit it. Search for:
 
-### 3. Recommended image preparation
+- `ArtZ Gallery` to change the gallery name
+- `Your Name` to change the footer name
+- `artist@example.com` to change the contact email
+- `Replace this paragraph` to change the artist statement
 
-For faster loading:
+Commit the edit and GitHub Pages will update automatically.
 
-- Export display images around 1600–2400 pixels on the longest side.
-- Use WebP or AVIF where possible.
-- Keep each gallery image below roughly 1–2 MB.
-- Keep original high-resolution files somewhere private if you do not want visitors downloading them directly.
+## Security notes
 
-Anything published on a public website can ultimately be saved or screenshotted. A visible watermark can help identify ownership, but it cannot fully prevent copying.
-
-## Publish with GitHub Pages
-
-1. Create a new GitHub repository.
-2. Upload every file and folder from this project to the repository root.
-3. Open the repository's **Settings**.
-4. Select **Pages** in the sidebar.
-5. Under **Build and deployment**, choose **Deploy from a branch**.
-6. Select the `main` branch and the `/(root)` folder, then save.
-7. GitHub will show the public site address after deployment finishes.
-
-A project repository is normally published at:
-
-`https://YOUR-USERNAME.github.io/REPOSITORY-NAME/`
-
-A repository named `YOUR-USERNAME.github.io` is normally published at:
-
-`https://YOUR-USERNAME.github.io/`
-
-## Test locally
-
-You can open `index.html` directly in a browser. For a more accurate local preview, run a small local web server from this folder:
-
-```bash
-python -m http.server 8000
-```
-
-Then open `http://localhost:8000` in your browser.
-
-Website deployment
+- The publishable Supabase key in `app.js` is intended to be public.
+- Never place a Supabase secret key or service-role key in this website.
+- Your existing Row Level Security policies are what restrict upload, edit, and delete actions to your user account.
