@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A curated digital gallery featuring original artwork.">
+  <meta name="theme-color" content="#111111">
+  <title>Nightframe Gallery</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#gallery">Skip to gallery</a>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Nightframe Gallery home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>Nightframe</span>
+    </a>
+
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="sr-only">Open navigation</span>
+      <span></span><span></span>
+    </button>
+
+    <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+      <a href="#gallery">Gallery</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Independent art showcase</p>
+        <h1 id="hero-title">Stories told in color, shape, and shadow.</h1>
+        <p class="hero-text">A personal archive of illustrations, character work, environments, and experiments.</p>
+        <a class="button" href="#gallery">Enter the gallery</a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="hero-frame hero-frame-one"></div>
+        <div class="hero-frame hero-frame-two"></div>
+        <div class="hero-frame hero-frame-three"></div>
+      </div>
+    </section>
+
+    <section id="gallery" class="gallery-section" aria-labelledby="gallery-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Selected works</p>
+          <h2 id="gallery-title">Gallery</h2>
+        </div>
+        <p class="gallery-count" aria-live="polite"><span id="visible-count">0</span> works</p>
+      </div>
+
+      <div class="filters" role="group" aria-label="Filter artwork by category">
+        <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter-button" type="button" data-filter="character" aria-pressed="false">Characters</button>
+        <button class="filter-button" type="button" data-filter="environment" aria-pressed="false">Environments</button>
+        <button class="filter-button" type="button" data-filter="concept" aria-pressed="false">Concepts</button>
+      </div>
+
+      <div id="gallery-grid" class="gallery-grid"></div>
+      <p id="empty-state" class="empty-state" hidden>No artwork matches this filter.</p>
+    </section>
+
+    <section id="about" class="about-section" aria-labelledby="about-title">
+      <div>
+        <p class="eyebrow">About the artist</p>
+        <h2 id="about-title">Making worlds one frame at a time.</h2>
+      </div>
+      <div class="about-copy">
+        <p>Replace this paragraph with a short artist statement. Talk about what inspires your work, the stories you enjoy telling, and the mediums you use.</p>
+        <p>This site is intentionally lightweight, so it loads quickly and keeps the focus on the artwork.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section" aria-labelledby="contact-title">
+      <p class="eyebrow">Contact</p>
+      <h2 id="contact-title">Have a project in mind?</h2>
+      <p>For commissions, collaborations, or questions, send a message.</p>
+      <a class="button button-light" href="mailto:artist@example.com">artist@example.com</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Your Name. All artwork rights reserved.</p>
+    <a href="#top">Back to top ↑</a>
+  </footer>
+
+  <dialog id="lightbox" class="lightbox" aria-labelledby="lightbox-title">
+    <button class="lightbox-close" type="button" aria-label="Close artwork viewer">×</button>
+    <button class="lightbox-nav lightbox-prev" type="button" aria-label="Previous artwork">←</button>
+    <figure>
+      <img id="lightbox-image" src="" alt="">
+      <figcaption>
+        <div>
+          <p id="lightbox-category" class="lightbox-category"></p>
+          <h2 id="lightbox-title"></h2>
+        </div>
+        <p id="lightbox-description"></p>
+      </figcaption>
+    </figure>
+    <button class="lightbox-nav lightbox-next" type="button" aria-label="Next artwork">→</button>
+  </dialog>
+</body>
+</html>
