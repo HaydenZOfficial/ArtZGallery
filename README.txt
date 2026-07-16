@@ -1,14 +1,20 @@
-HADENZ SOCIAL LINKS UPDATE
+HadenZ Gallery — Hero GIF Update
 
-Upload index.html and styles.css to the root of your ArtZGallery GitHub repository.
-GitHub will ask to replace the existing files. Commit the changes, wait for Pages to deploy, then press Ctrl+F5 on the website.
+Upload these items to the ROOT of your GitHub repository:
 
-This update adds:
-- Commission, Ko-fi, PayPal, and Discord feature cards
-- YouTube, Twitch, TikTok, Instagram, X, and Game Jolt link cards
-- Header and footer link navigation
-- Royal purple/gold Neocities styling
-- Responsive link grids
-- The previous full-screen artwork resizing fix
+- index.html
+- styles.css
+- assets/ZenTailWag_YCH.gif
 
-No JavaScript or Supabase settings are changed.
+Keep app.js and your other files unchanged.
+
+On GitHub:
+1. Click Add file -> Upload files.
+2. Drag index.html, styles.css, and the assets folder onto the upload page.
+3. Confirm GitHub shows index.html and styles.css as replacements.
+4. Commit changes.
+5. Wait for GitHub Pages to deploy, then press Ctrl+F5 on the live site.
+
+This update replaces the three abstract frames on the right side of the homepage
+with the animated canine GIF. The image uses object-fit: contain, so it scales
+without being cropped on desktop or mobile.
