@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="An independent digital art gallery.">
-  <meta name="theme-color" content="#151515">
-  <title>HaydenZOfficals Gallery</title>
+  <meta name="description" content="HadenZOfficial’s independent art gallery, commission hub, and creative links.">
+  <meta name="theme-color" content="#240037">
+  <title>HadenZOfficial’s Gallery</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
@@ -15,9 +15,9 @@
   <a class="skip-link" href="#gallery">Skip to gallery</a>
 
   <header class="site-header" id="top">
-    <a class="brand" href="#top" aria-label="ArtZ Gallery home">
+    <a class="brand" href="#top" aria-label="HadenZOfficial gallery home">
       <span class="brand-mark" aria-hidden="true"></span>
-      <span>ArtZ Gallery</span>
+      <span>HadenZ Gallery</span>
     </a>
 
     <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
@@ -28,7 +28,8 @@
     <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
       <a href="#gallery">Gallery</a>
       <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <a href="#contact">Commissions</a>
+      <a href="#links">Links</a>
       <button id="open-admin" class="nav-admin" type="button">Artist login</button>
     </nav>
   </header>
@@ -41,7 +42,9 @@
         <p class="hero-text">Original illustrations, character work, environments, sketches, and visual experiments.</p>
         <div class="hero-actions">
           <a class="button" href="#gallery">View the gallery</a>
-          <button id="hero-upload" class="button button-ghost" type="button">Upload artwork</button>
+          <a class="button button-ghost" href="https://trello.com/b/LdZbMaqK/zens-commissions" target="_blank" rel="noopener noreferrer">Commission info</a>
+          <a class="button button-ghost" href="https://ko-fi.com/hadenz/tiers" target="_blank" rel="noopener noreferrer">Support my art</a>
+          <button id="hero-upload" class="button button-ghost artist-only-action" type="button">Upload artwork</button>
         </div>
       </div>
 
@@ -89,16 +92,65 @@
     </section>
 
     <section id="contact" class="contact-section" aria-labelledby="contact-title">
-      <p class="eyebrow">Contact</p>
-      <h2 id="contact-title">Let’s make something memorable.</h2>
-      <p>for commissions, collaborations, and questions.</p>
-      <a class="button button-light" href="mailto:artist@example.com">Discord: @haden.z</a>
+      <div class="link-marquee" aria-hidden="true">COMMISSIONS ✦ SUPPORT ✦ COMMUNITY ✦ COMMISSIONS ✦ SUPPORT ✦ COMMUNITY ✦</div>
+      <div class="contact-heading">
+        <p class="eyebrow">Work with me</p>
+        <h2 id="contact-title">Commissions, support, and community.</h2>
+        <p>Check commission availability, support future artwork, leave a tip, or join the community space.</p>
+      </div>
+
+      <div class="featured-link-grid">
+        <a class="featured-link platform-trello" href="https://trello.com/b/LdZbMaqK/zens-commissions" target="_blank" rel="noopener noreferrer">
+          <span class="link-icon" aria-hidden="true">▦</span>
+          <span class="link-copy"><span class="link-kicker">Commission hub</span><strong>Zen’s Commissions</strong><span>View prices, examples, status, and commission information.</span></span>
+          <span class="link-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="featured-link platform-kofi" href="https://ko-fi.com/hadenz/tiers" target="_blank" rel="noopener noreferrer">
+          <span class="link-icon" aria-hidden="true">♥</span>
+          <span class="link-copy"><span class="link-kicker">Memberships</span><strong>Ko-fi Tiers</strong><span>Support my work and see available membership tiers.</span></span>
+          <span class="link-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="featured-link platform-paypal" href="https://www.paypal.com/paypalme/germanbrok" target="_blank" rel="noopener noreferrer">
+          <span class="link-icon" aria-hidden="true">$</span>
+          <span class="link-copy"><span class="link-kicker">Tip jar</span><strong>PayPal</strong><span>Send direct support through my PayPal.me page.</span></span>
+          <span class="link-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="featured-link platform-discord" href="https://discord.gg/RcxATSkduw" target="_blank" rel="noopener noreferrer">
+          <span class="link-icon" aria-hidden="true">☄</span>
+          <span class="link-copy"><span class="link-kicker">Community</span><strong>Join the Discord</strong><span>Hang out, follow updates, and connect with the community.</span></span>
+          <span class="link-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <section id="links" class="links-section" aria-labelledby="links-title">
+      <div class="section-heading links-heading">
+        <div>
+          <p class="eyebrow">Elsewhere online</p>
+          <h2 id="links-title">Find HadenZ across the web.</h2>
+        </div>
+        <p class="links-stamp" aria-hidden="true">WEB PORTAL<br>EST. 2026</p>
+      </div>
+
+      <div class="social-link-grid">
+        <a class="social-link platform-youtube" href="https://www.youtube.com/@hadenzstudios" target="_blank" rel="noopener noreferrer"><span class="social-icon" aria-hidden="true">▶</span><span><strong>YouTube</strong><small>@hadenzstudios</small></span><span aria-hidden="true">↗</span></a>
+        <a class="social-link platform-twitch" href="https://www.twitch.tv/hadenz_studio" target="_blank" rel="noopener noreferrer"><span class="social-icon" aria-hidden="true">◩</span><span><strong>Twitch</strong><small>hadenz_studio</small></span><span aria-hidden="true">↗</span></a>
+        <a class="social-link platform-tiktok" href="https://www.tiktok.com/@hadenz.official" target="_blank" rel="noopener noreferrer"><span class="social-icon" aria-hidden="true">♪</span><span><strong>TikTok</strong><small>@hadenz.official</small></span><span aria-hidden="true">↗</span></a>
+        <a class="social-link platform-instagram" href="https://www.instagram.com/hadenz.official/" target="_blank" rel="noopener noreferrer"><span class="social-icon" aria-hidden="true">◎</span><span><strong>Instagram</strong><small>@hadenz.official</small></span><span aria-hidden="true">↗</span></a>
+        <a class="social-link platform-x" href="https://x.com/german_brok" target="_blank" rel="noopener noreferrer"><span class="social-icon" aria-hidden="true">𝕏</span><span><strong>X / Twitter</strong><small>@german_brok</small></span><span aria-hidden="true">↗</span></a>
+        <a class="social-link platform-gamejolt" href="https://gamejolt.com/@Haden-z" target="_blank" rel="noopener noreferrer"><span class="social-icon" aria-hidden="true">⚡</span><span><strong>Game Jolt</strong><small>@Haden-z</small></span><span aria-hidden="true">↗</span></a>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p>© <span id="year"></span> Your Name. All artwork rights reserved.</p>
-    <a href="#top">Back to top ↑</a>
+    <p>© <span id="year"></span> HadenZOfficial. All artwork rights reserved.</p>
+    <nav class="footer-links" aria-label="Social links">
+      <a href="https://www.youtube.com/@hadenzstudios" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="https://www.instagram.com/hadenz.official/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://discord.gg/RcxATSkduw" target="_blank" rel="noopener noreferrer">Discord</a>
+      <a href="#top">Top ↑</a>
+    </nav>
   </footer>
 
   <dialog id="lightbox" class="lightbox" aria-labelledby="lightbox-title">
