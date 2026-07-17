@@ -3077,3 +3077,539 @@ input:focus, textarea:focus, select:focus { border-color: var(--gold-bright); bo
   cursor: wait;
   opacity: .7;
 }
+
+
+/* =========================================================
+   Commission prices, boundaries, guide, and terms
+   ========================================================= */
+
+#pricing,
+#dos-donts,
+#guide-notes,
+#terms,
+#commission-form {
+  scroll-margin-top: 7rem;
+}
+
+.commission-page-nav {
+  position: sticky;
+  top: 5.35rem;
+  z-index: 25;
+  display: flex;
+  width: min(calc(100% - 1.4rem), var(--max-width));
+  margin: 1rem auto 0;
+  overflow-x: auto;
+  background: rgba(18, 0, 28, .94);
+  border: 2px solid var(--gold);
+  box-shadow: 7px 7px 0 rgba(75, 15, 105, .72);
+  scrollbar-width: thin;
+}
+
+.commission-page-nav a {
+  flex: 1 0 auto;
+  padding: .72rem .95rem;
+  color: var(--gold-bright);
+  border-right: 1px solid rgba(255, 220, 85, .28);
+  font-family: monospace;
+  font-size: .66rem;
+  font-weight: 900;
+  letter-spacing: .055em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.commission-page-nav a:last-child {
+  border-right: 0;
+}
+
+.commission-page-nav a:hover,
+.commission-page-nav a:focus-visible {
+  color: #260035;
+  background: var(--gold);
+  outline: none;
+}
+
+.commission-info-section {
+  width: min(calc(100% - 1.4rem), var(--max-width));
+  margin-inline: auto;
+  padding: clamp(4rem, 8vw, 7rem) var(--page-pad);
+}
+
+.commission-info-heading {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.commission-info-heading h2 {
+  max-width: 12ch;
+  margin-top: .35rem;
+}
+
+.commission-info-stamp {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: .55rem .75rem;
+  color: #260035;
+  background: var(--gold);
+  border: 3px double #4b0c66;
+  box-shadow: 5px 5px 0 rgba(16, 0, 24, .78);
+  font-family: monospace;
+  font-size: .65rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.commission-pricing-section {
+  margin-top: 2rem;
+  background:
+    radial-gradient(circle at 94% 8%, rgba(255, 220, 85, .11), transparent 21rem),
+    linear-gradient(145deg, rgba(44, 5, 63, .93), rgba(20, 0, 29, .94));
+  border: 3px solid rgba(255, 220, 85, .45);
+  box-shadow: var(--shadow);
+}
+
+.commission-pricing-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(260px, .55fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.pricing-table-card,
+.other-offers-card {
+  overflow: hidden;
+  background: rgba(19, 0, 29, .88);
+  border: 3px solid var(--gold);
+  box-shadow: 8px 9px 0 rgba(71, 18, 96, .7);
+}
+
+.pricing-table-scroll {
+  overflow-x: auto;
+}
+
+.commission-pricing-table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+  color: var(--cream);
+}
+
+.commission-pricing-table caption {
+  padding: .75rem;
+  color: var(--gold);
+  background: #230031;
+  font-family: monospace;
+  font-size: .65rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.commission-pricing-table th,
+.commission-pricing-table td {
+  padding: .9rem .8rem;
+  border: 1px solid rgba(255, 220, 85, .34);
+  text-align: center;
+}
+
+.commission-pricing-table thead th {
+  color: #260035;
+  background: var(--gold);
+  font-family: monospace;
+  font-size: .7rem;
+  font-weight: 900;
+  letter-spacing: .025em;
+  text-transform: uppercase;
+}
+
+.commission-pricing-table tbody th {
+  color: var(--gold-bright);
+  background: rgba(123, 44, 191, .22);
+  text-align: left;
+}
+
+.commission-pricing-table tbody tr:nth-child(even) td {
+  background: rgba(255, 255, 255, .025);
+}
+
+.commission-pricing-table td {
+  color: #f3e9f6;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.pricing-disclaimer {
+  margin: 0;
+  padding: .8rem 1rem;
+  color: #d9cbe0;
+  background: rgba(180, 92, 255, .08);
+  border-top: 1px dashed rgba(255, 220, 85, .4);
+  font-family: monospace;
+  font-size: .68rem;
+}
+
+.other-offers-card {
+  padding: 1.2rem;
+}
+
+.other-offers-card h3 {
+  margin: .3rem 0 1rem;
+  color: var(--gold-bright);
+  font-size: 1.7rem;
+}
+
+.other-offers-list {
+  display: grid;
+  gap: .55rem;
+  margin: 0;
+}
+
+.other-offers-list > div {
+  display: flex;
+  gap: .75rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: .7rem;
+  background: rgba(123, 44, 191, .16);
+  border: 1px solid rgba(255, 220, 85, .28);
+}
+
+.other-offers-list dt {
+  color: #eee3f2;
+  font-weight: 800;
+}
+
+.other-offers-list dt small {
+  display: block;
+  color: var(--muted);
+  font-family: monospace;
+  font-size: .57rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.other-offers-list dd {
+  flex: 0 0 auto;
+  margin: 0;
+  color: var(--gold);
+  font-family: monospace;
+  font-weight: 900;
+}
+
+.commission-boundaries-section {
+  margin-top: clamp(3rem, 7vw, 6rem);
+}
+
+.commission-boundary-note {
+  display: grid;
+  gap: .55rem;
+  margin-bottom: 1.1rem;
+  padding: 1rem 1.15rem;
+  color: #eee4f2;
+  background:
+    repeating-linear-gradient(135deg, transparent 0 20px, rgba(255, 220, 85, .025) 21px 23px),
+    rgba(75, 20, 102, .62);
+  border: 2px solid var(--gold);
+  box-shadow: 7px 8px 0 rgba(11, 0, 18, .48);
+}
+
+.commission-boundary-note p {
+  margin: 0;
+}
+
+.commission-boundary-note strong {
+  color: var(--gold);
+}
+
+.commission-boundary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.commission-boundary-card {
+  padding: 1.2rem;
+  background: rgba(23, 0, 34, .9);
+  border: 3px solid;
+  box-shadow: 8px 9px 0 rgba(0, 0, 0, .34);
+}
+
+.commission-boundary-card.is-accepted {
+  border-color: #87f7a0;
+}
+
+.commission-boundary-card.is-declined {
+  border-color: #ff88a7;
+}
+
+.boundary-card-heading {
+  display: flex;
+  gap: .8rem;
+  align-items: center;
+  padding-bottom: .8rem;
+  border-bottom: 1px dashed rgba(255, 220, 85, .34);
+}
+
+.boundary-card-heading > span {
+  display: grid;
+  width: 3.2rem;
+  height: 3.2rem;
+  flex: 0 0 auto;
+  place-items: center;
+  color: #170020;
+  border: 3px solid #fff;
+  box-shadow: 4px 4px 0 #120019;
+  font-size: 1.55rem;
+  font-weight: 900;
+}
+
+.is-accepted .boundary-card-heading > span {
+  background: #87f7a0;
+}
+
+.is-declined .boundary-card-heading > span {
+  background: #ff88a7;
+}
+
+.boundary-card-heading h3 {
+  margin: .1rem 0 0;
+  color: var(--gold-bright);
+  font-size: 1.75rem;
+}
+
+.boundary-list {
+  display: grid;
+  gap: .65rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.boundary-list li {
+  position: relative;
+  padding: .68rem .72rem .68rem 2rem;
+  color: #dfd2e5;
+  background: rgba(255, 255, 255, .022);
+  border: 1px solid rgba(255, 220, 85, .14);
+}
+
+.boundary-list li::before {
+  position: absolute;
+  top: .67rem;
+  left: .72rem;
+  font-family: monospace;
+  font-weight: 900;
+}
+
+.is-accepted .boundary-list li::before {
+  content: "✓";
+  color: #87f7a0;
+}
+
+.is-declined .boundary-list li::before {
+  content: "×";
+  color: #ff88a7;
+}
+
+.boundary-list strong {
+  color: var(--gold-bright);
+}
+
+.commission-guide-section {
+  margin-top: clamp(3rem, 7vw, 6rem);
+  background:
+    linear-gradient(90deg, rgba(16, 0, 24, .95), rgba(46, 7, 65, .94)),
+    var(--dark);
+  border-block: 3px solid var(--gold);
+}
+
+.commission-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.commission-guide-grid li {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  gap: .85rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, .026);
+  border: 2px solid rgba(180, 92, 255, .48);
+  box-shadow: 6px 7px 0 rgba(0, 0, 0, .27);
+}
+
+.commission-guide-grid li:last-child {
+  grid-column: 1 / -1;
+}
+
+.commission-guide-grid > li > span {
+  color: var(--gold);
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.commission-guide-grid h3 {
+  margin: 0 0 .35rem;
+  color: var(--gold-bright);
+}
+
+.commission-guide-grid p {
+  margin: 0;
+  color: #d8cadd;
+}
+
+.commission-guide-grid p + p {
+  margin-top: .45rem;
+}
+
+.commission-terms-section {
+  margin-top: clamp(3rem, 7vw, 6rem);
+}
+
+.terms-introduction {
+  max-width: 880px;
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.commission-terms-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .9rem;
+}
+
+.commission-terms-grid article {
+  position: relative;
+  padding: 1.15rem;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 100% 0, rgba(255, 220, 85, .09), transparent 12rem),
+    rgba(36, 0, 52, .9);
+  border: 2px solid rgba(255, 220, 85, .45);
+  box-shadow: 7px 8px 0 rgba(0, 0, 0, .32);
+}
+
+.commission-terms-grid article:last-child {
+  grid-column: 1 / -1;
+}
+
+.commission-terms-grid article > span {
+  position: absolute;
+  top: .5rem;
+  right: .7rem;
+  color: rgba(255, 220, 85, .18);
+  font-size: 3.2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.commission-terms-grid h3 {
+  position: relative;
+  margin: 0 0 .7rem;
+  color: var(--gold-bright);
+  font-size: 1.65rem;
+}
+
+.commission-terms-grid ul {
+  display: grid;
+  gap: .55rem;
+  margin: 0;
+  padding-left: 1.15rem;
+  color: #dbcee1;
+}
+
+.commission-terms-grid li::marker {
+  color: var(--gold);
+}
+
+.terms-final-note {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+  padding: .9rem 1rem;
+  color: #260035;
+  background: var(--gold);
+  border: 3px double #4c0b65;
+  box-shadow: 7px 8px 0 rgba(17, 0, 25, .52);
+}
+
+.terms-final-note strong {
+  flex: 0 0 auto;
+  font-family: monospace;
+  text-transform: uppercase;
+}
+
+.terms-final-note p {
+  margin: 0;
+}
+
+.commission-consent a {
+  color: var(--gold);
+  font-weight: 900;
+  text-underline-offset: .18rem;
+}
+
+.commission-consent a:hover,
+.commission-consent a:focus-visible {
+  color: var(--gold-bright);
+}
+
+@media (max-width: 980px) {
+  .commission-pricing-layout,
+  .commission-boundary-grid,
+  .commission-guide-grid,
+  .commission-terms-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .commission-guide-grid li:last-child,
+  .commission-terms-grid article:last-child {
+    grid-column: auto;
+  }
+
+  .commission-page-nav {
+    top: 4.65rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .commission-info-section {
+    padding-inline: .8rem;
+  }
+
+  .commission-info-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .commission-info-stamp {
+    align-self: flex-start;
+  }
+
+  .commission-guide-grid li {
+    grid-template-columns: 1fr;
+  }
+
+  .terms-final-note {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .commission-page-nav a {
+    padding-inline: .75rem;
+  }
+}
