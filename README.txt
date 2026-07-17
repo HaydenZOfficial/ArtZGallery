@@ -1,20 +1,23 @@
-HadenZ Gallery — Hero GIF Update
+HadenZ Gallery — Logo Update
+
+This update adds your supplied logo in three places:
+- the sticky header beside “HadenZ Gallery”
+- the browser tab / bookmark icon
+- the footer signature
 
 Upload these items to the ROOT of your GitHub repository:
-
 - index.html
 - styles.css
-- assets/ZenTailWag_YCH.gif
+- assets/Hadenz_Logo.png
 
-Keep app.js and your other files unchanged.
+Keep app.js, your Supabase settings, uploaded artwork, and
+assets/ZenTailWag_YCH.gif unchanged.
 
-On GitHub:
-1. Click Add file -> Upload files.
-2. Drag index.html, styles.css, and the assets folder onto the upload page.
-3. Confirm GitHub shows index.html and styles.css as replacements.
-4. Commit changes.
-5. Wait for GitHub Pages to deploy, then press Ctrl+F5 on the live site.
-
-This update replaces the three abstract frames on the right side of the homepage
-with the animated canine GIF. The image uses object-fit: contain, so it scales
-without being cropped on desktop or mobile.
+GitHub steps:
+1. Open the ArtZGallery repository.
+2. Click Add file -> Upload files.
+3. Drag index.html, styles.css, and the assets folder onto GitHub.
+4. Confirm index.html and styles.css are marked as replacements.
+5. Commit changes.
+6. Wait for GitHub Pages to redeploy.
+7. On the live site press Ctrl+F5 to clear the old cached design.

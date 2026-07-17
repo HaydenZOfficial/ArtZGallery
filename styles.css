@@ -200,14 +200,26 @@ h3 {
   text-shadow: 2px 2px 0 #28003b;
 }
 
-.brand-mark {
-  width: 1.05rem;
-  height: 1.05rem;
-  background: linear-gradient(135deg, var(--gold-bright), var(--amber));
-  border: 2px solid #fff8c9;
-  clip-path: polygon(50% 0, 62% 36%, 100% 50%, 62% 64%, 50% 100%, 38% 64%, 0 50%, 38% 36%);
-  filter: drop-shadow(0 0 7px rgba(255,220,85,.75));
-  animation: twinkle 2.4s steps(2, end) infinite;
+.brand-logo {
+  width: 3.15rem;
+  height: 3.15rem;
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter:
+    drop-shadow(3px 3px 0 rgba(25, 0, 37, .95))
+    drop-shadow(0 0 10px rgba(180, 92, 255, .72))
+    drop-shadow(0 0 5px rgba(255, 220, 85, .42));
+  transform: rotate(-3deg);
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.brand:hover .brand-logo,
+.brand:focus-visible .brand-logo {
+  filter:
+    drop-shadow(4px 4px 0 rgba(25, 0, 37, .95))
+    drop-shadow(0 0 15px rgba(180, 92, 255, .9))
+    drop-shadow(0 0 9px rgba(255, 220, 85, .72));
+  transform: rotate(3deg) scale(1.08);
 }
 
 .site-nav {
@@ -782,6 +794,22 @@ h3 {
 }
 .site-footer p { margin: 0; }
 
+.footer-signature {
+  display: inline-flex;
+  gap: .75rem;
+  align-items: center;
+}
+
+.footer-logo {
+  width: 3.4rem;
+  height: 3.4rem;
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter:
+    drop-shadow(2px 2px 0 #250034)
+    drop-shadow(0 0 8px rgba(180, 92, 255, .65));
+}
+
 /* Dialogs */
 dialog {
   padding: 0;
@@ -1075,6 +1103,8 @@ input:focus, textarea:focus, select:focus { border-color: var(--gold-bright); bo
   body::after { opacity: .4; }
 
   .site-header { align-items: center; }
+  .brand-logo { width: 2.65rem; height: 2.65rem; }
+  .brand { gap: .5rem; font-size: .88rem; }
   .menu-button { display: block; }
   .site-nav {
     position: absolute;
