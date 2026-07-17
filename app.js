@@ -7,6 +7,7 @@
     adminUserId: "64388341-ee37-430f-a590-f99b96939fca",
     bucket: "artworks",
     table: "artworks",
+    commissionTable: "commission_requests",
     maxUploadBytes: 6 * 1024 * 1024
   });
 
@@ -79,7 +80,18 @@
     editDescription: $("#edit-artwork-description"),
     saveEdit: $("#save-edit"),
     editStatus: $("#edit-status"),
-    toast: $("#toast")
+    toast: $("#toast"),
+    galleryDashboardTab: $("#gallery-dashboard-tab"),
+    commissionDashboardTab: $("#commission-dashboard-tab"),
+    galleryDashboardPanel: $("#gallery-dashboard-panel"),
+    commissionDashboardPanel: $("#commission-dashboard-panel"),
+    commissionNewCount: $("#commission-new-count"),
+    commissionStatusFilter: $("#commission-status-filter"),
+    refreshCommissions: $("#refresh-commissions"),
+    commissionInboxLoading: $("#commission-inbox-loading"),
+    commissionInboxEmpty: $("#commission-inbox-empty"),
+    commissionInboxError: $("#commission-inbox-error"),
+    commissionInboxList: $("#commission-inbox-list")
   };
 
   let artworks = [];
@@ -88,6 +100,11 @@
   let lightboxIndex = 0;
   let previewObjectUrl = null;
   let toastTimer = null;
+  let commissionRequests = [];
+  let activeDashboardPanel = "gallery";
+  let requestedDashboardPanel = new URLSearchParams(window.location.search).get("admin") === "commissions"
+    ? "commissions"
+    : "gallery";
 
   function setStatus(element, message = "", type = "") {
     element.textContent = message;
@@ -285,16 +302,27 @@
     if (isAdmin) {
       elements.signedInEmail.textContent = user.email || "Authorized artist";
       renderManageList();
+      await loadCommissionInbox();
+      selectDashboardPanel(requestedDashboardPanel);
     }
   }
 
-  async function openAdminDialog() {
+  async function openAdminDialog(panel = requestedDashboardPanel) {
+    requestedDashboardPanel = panel === "commissions" ? "commissions" : "gallery";
     setStatus(elements.loginStatus);
     const session = await getCurrentSession();
     await updateAuthView(session);
     elements.adminDialog.showModal();
-    const target = session?.user?.id === CONFIG.adminUserId ? elements.fileInput : elements.loginEmail;
-    setTimeout(() => target.focus(), 0);
+
+    if (session?.user?.id === CONFIG.adminUserId) {
+      selectDashboardPanel(requestedDashboardPanel);
+    }
+
+    const target = session?.user?.id === CONFIG.adminUserId
+      ? (requestedDashboardPanel === "commissions" ? elements.commissionStatusFilter : elements.fileInput)
+      : elements.loginEmail;
+
+    setTimeout(() => target?.focus(), 0);
   }
 
   async function handleLogin(event) {
@@ -543,6 +571,323 @@
     await loadGallery();
   }
 
+
+  const REQUEST_STATUS_LABELS = Object.freeze({
+    new: "New",
+    reviewing: "Reviewing",
+    accepted: "Accepted",
+    in_progress: "In progress",
+    completed: "Completed",
+    declined: "Declined",
+    archived: "Archived"
+  });
+
+  const PAYMENT_STATUS_LABELS = Object.freeze({
+    not_requested: "Not requested",
+    awaiting_payment: "Awaiting payment",
+    payment_claimed: "Payment claimed",
+    paid_verified: "Paid — verified",
+    refunded: "Refunded",
+    waived: "No payment required"
+  });
+
+  function selectDashboardPanel(panel) {
+    activeDashboardPanel = panel === "commissions" ? "commissions" : "gallery";
+    const commissionsActive = activeDashboardPanel === "commissions";
+
+    elements.galleryDashboardTab.classList.toggle("is-active", !commissionsActive);
+    elements.galleryDashboardTab.setAttribute("aria-selected", String(!commissionsActive));
+    elements.commissionDashboardTab.classList.toggle("is-active", commissionsActive);
+    elements.commissionDashboardTab.setAttribute("aria-selected", String(commissionsActive));
+    elements.galleryDashboardPanel.hidden = commissionsActive;
+    elements.commissionDashboardPanel.hidden = !commissionsActive;
+
+    if (commissionsActive) {
+      renderCommissionInbox();
+    }
+  }
+
+  function formatCommissionDate(dateString) {
+    if (!dateString) return "";
+    return new Intl.DateTimeFormat(undefined, {
+      dateStyle: "medium",
+      timeStyle: "short"
+    }).format(new Date(dateString));
+  }
+
+  function paymentBadgeClass(status) {
+    if (status === "paid_verified") return "is-paid";
+    if (status === "payment_claimed") return "is-claimed";
+    if (status === "awaiting_payment") return "is-awaiting";
+    if (status === "refunded") return "is-refunded";
+    return "";
+  }
+
+  async function loadCommissionInbox() {
+    const session = await getCurrentSession();
+    if (session?.user?.id !== CONFIG.adminUserId) return;
+
+    elements.commissionInboxLoading.hidden = false;
+    elements.commissionInboxError.hidden = true;
+
+    const { data, error } = await db
+      .from(CONFIG.commissionTable)
+      .select(`
+        id,
+        reference_code,
+        name,
+        email,
+        contact_method,
+        contact_handle,
+        commission_type,
+        usage_type,
+        budget,
+        deadline,
+        message,
+        reference_links,
+        payment_method,
+        payment_reference,
+        payment_status,
+        request_status,
+        quoted_amount,
+        artist_notes,
+        created_at,
+        updated_at
+      `)
+      .order("created_at", { ascending: false });
+
+    elements.commissionInboxLoading.hidden = true;
+
+    if (error) {
+      elements.commissionInboxError.textContent = error.message;
+      elements.commissionInboxError.hidden = false;
+      return;
+    }
+
+    commissionRequests = data || [];
+    const newCount = commissionRequests.filter(request => request.request_status === "new").length;
+    elements.commissionNewCount.textContent = String(newCount);
+    elements.commissionNewCount.hidden = newCount === 0;
+    renderCommissionInbox();
+  }
+
+  function createCommissionOption(value, label, selectedValue) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    option.selected = value === selectedValue;
+    return option;
+  }
+
+  function makeCommissionRequestCard(request) {
+    const article = document.createElement("article");
+    article.className = `commission-inbox-card${request.request_status === "new" ? " is-new" : ""}`;
+    article.dataset.requestId = request.id;
+
+    const header = document.createElement("div");
+    header.className = "commission-inbox-card-header";
+
+    const identity = document.createElement("div");
+    const reference = document.createElement("p");
+    reference.className = "commission-reference-code";
+    reference.textContent = request.reference_code;
+
+    const title = document.createElement("h4");
+    title.textContent = `${request.name} — ${titleCase(request.commission_type.replaceAll("_", " "))}`;
+
+    const created = document.createElement("p");
+    created.className = "commission-received-date";
+    created.textContent = `Received ${formatCommissionDate(request.created_at)}`;
+
+    identity.append(reference, title, created);
+
+    const badges = document.createElement("div");
+    badges.className = "commission-inbox-badges";
+
+    const requestBadge = document.createElement("span");
+    requestBadge.className = "commission-status-badge";
+    requestBadge.textContent = REQUEST_STATUS_LABELS[request.request_status] || request.request_status;
+
+    const paymentBadge = document.createElement("span");
+    paymentBadge.className = `commission-status-badge payment-badge ${paymentBadgeClass(request.payment_status)}`;
+    paymentBadge.textContent = PAYMENT_STATUS_LABELS[request.payment_status] || request.payment_status;
+
+    badges.append(requestBadge, paymentBadge);
+    header.append(identity, badges);
+
+    const contact = document.createElement("div");
+    contact.className = "commission-contact-row";
+
+    const emailLink = document.createElement("a");
+    emailLink.href = `mailto:${encodeURIComponent(request.email)}?subject=${encodeURIComponent(`Commission request ${request.reference_code}`)}`;
+    emailLink.textContent = request.email;
+
+    const contactHandle = document.createElement("span");
+    contactHandle.textContent = request.contact_handle
+      ? `${titleCase(request.contact_method)}: ${request.contact_handle}`
+      : `Preferred contact: ${titleCase(request.contact_method)}`;
+
+    contact.append(emailLink, contactHandle);
+
+    const summary = document.createElement("dl");
+    summary.className = "commission-summary-grid";
+
+    const summaryEntries = [
+      ["Usage", titleCase(request.usage_type)],
+      ["Budget", request.budget || "Not provided"],
+      ["Deadline", request.deadline ? formatDate(request.deadline) : "Not provided"],
+      ["Payment method", request.payment_method ? titleCase(request.payment_method) : "Not provided"],
+      ["Payment reference", request.payment_reference || "Not provided"],
+      ["Quoted amount", request.quoted_amount != null ? `$${Number(request.quoted_amount).toFixed(2)}` : "Not set"]
+    ];
+
+    summaryEntries.forEach(([termText, descriptionText]) => {
+      const wrapper = document.createElement("div");
+      const term = document.createElement("dt");
+      term.textContent = termText;
+      const description = document.createElement("dd");
+      description.textContent = descriptionText;
+      wrapper.append(term, description);
+      summary.append(wrapper);
+    });
+
+    const messageBlock = document.createElement("div");
+    messageBlock.className = "commission-message-block";
+    const messageHeading = document.createElement("strong");
+    messageHeading.textContent = "Request message";
+    const message = document.createElement("p");
+    message.textContent = request.message;
+    messageBlock.append(messageHeading, message);
+
+    if (request.reference_links) {
+      const references = document.createElement("p");
+      references.className = "commission-reference-links";
+      const referenceLabel = document.createElement("strong");
+      referenceLabel.textContent = "Reference links: ";
+      references.append(referenceLabel, document.createTextNode(request.reference_links));
+      messageBlock.append(references);
+    }
+
+    const controls = document.createElement("div");
+    controls.className = "commission-inbox-controls";
+
+    const requestStatusLabel = document.createElement("label");
+    requestStatusLabel.textContent = "Request status";
+    const requestStatus = document.createElement("select");
+    requestStatus.className = "request-status-select";
+    Object.entries(REQUEST_STATUS_LABELS).forEach(([value, label]) => {
+      requestStatus.append(createCommissionOption(value, label, request.request_status));
+    });
+    requestStatusLabel.append(requestStatus);
+
+    const paymentStatusLabel = document.createElement("label");
+    paymentStatusLabel.textContent = "Payment status";
+    const paymentStatus = document.createElement("select");
+    paymentStatus.className = "payment-status-select";
+    Object.entries(PAYMENT_STATUS_LABELS).forEach(([value, label]) => {
+      paymentStatus.append(createCommissionOption(value, label, request.payment_status));
+    });
+    paymentStatusLabel.append(paymentStatus);
+
+    const quoteLabel = document.createElement("label");
+    quoteLabel.textContent = "Quoted amount (USD)";
+    const quote = document.createElement("input");
+    quote.className = "commission-quote-input";
+    quote.type = "number";
+    quote.min = "0";
+    quote.step = "0.01";
+    quote.placeholder = "0.00";
+    quote.value = request.quoted_amount ?? "";
+    quoteLabel.append(quote);
+
+    const notesLabel = document.createElement("label");
+    notesLabel.className = "commission-notes-label";
+    notesLabel.textContent = "Private artist notes";
+    const notes = document.createElement("textarea");
+    notes.className = "commission-notes-input";
+    notes.rows = 4;
+    notes.maxLength = 3000;
+    notes.placeholder = "Only the artist can see these notes.";
+    notes.value = request.artist_notes || "";
+    notesLabel.append(notes);
+
+    controls.append(requestStatusLabel, paymentStatusLabel, quoteLabel, notesLabel);
+
+    const actions = document.createElement("div");
+    actions.className = "commission-inbox-actions";
+
+    const save = document.createElement("button");
+    save.type = "button";
+    save.className = "button commission-save-button";
+    save.textContent = "Save inbox changes";
+    save.addEventListener("click", () => saveCommissionRequest(request.id, article, save));
+
+    const email = document.createElement("a");
+    email.className = "button button-ghost";
+    email.href = emailLink.href;
+    email.textContent = "Email requester";
+
+    const archive = document.createElement("button");
+    archive.type = "button";
+    archive.className = "small-button";
+    archive.textContent = request.request_status === "archived" ? "Restore to reviewing" : "Archive";
+    archive.addEventListener("click", async () => {
+      requestStatus.value = request.request_status === "archived" ? "reviewing" : "archived";
+      await saveCommissionRequest(request.id, article, archive);
+    });
+
+    actions.append(save, email, archive);
+    article.append(header, contact, summary, messageBlock, controls, actions);
+    return article;
+  }
+
+  function renderCommissionInbox() {
+    if (!elements.commissionInboxList) return;
+
+    const filter = elements.commissionStatusFilter.value;
+    const visible = filter === "all"
+      ? commissionRequests
+      : commissionRequests.filter(request => request.request_status === filter);
+
+    elements.commissionInboxList.replaceChildren(...visible.map(makeCommissionRequestCard));
+    elements.commissionInboxEmpty.hidden = visible.length !== 0;
+  }
+
+  async function saveCommissionRequest(id, card, button) {
+    const session = await getCurrentSession();
+    if (session?.user?.id !== CONFIG.adminUserId) {
+      showToast("Your artist session expired.", "error");
+      return;
+    }
+
+    const requestStatus = $(".request-status-select", card).value;
+    const paymentStatus = $(".payment-status-select", card).value;
+    const quoteValue = $(".commission-quote-input", card).value.trim();
+    const artistNotes = $(".commission-notes-input", card).value.trim();
+
+    setBusy(button, true, "Saving…", button.textContent);
+
+    const { error } = await db
+      .from(CONFIG.commissionTable)
+      .update({
+        request_status: requestStatus,
+        payment_status: paymentStatus,
+        quoted_amount: quoteValue === "" ? null : Number(quoteValue),
+        artist_notes: artistNotes
+      })
+      .eq("id", id);
+
+    setBusy(button, false, "Saving…", button.textContent);
+
+    if (error) {
+      showToast(error.message, "error");
+      return;
+    }
+
+    showToast("Commission inbox updated.");
+    await loadCommissionInbox();
+  }
+
   function closeDialogOnBackdrop(dialog, event) {
     if (event.target === dialog) dialog.close();
   }
@@ -613,12 +958,32 @@
   elements.editForm.addEventListener("submit", handleEdit);
   elements.retry.addEventListener("click", loadGallery);
 
+
+  elements.galleryDashboardTab.addEventListener("click", () => {
+    requestedDashboardPanel = "gallery";
+    selectDashboardPanel("gallery");
+  });
+
+  elements.commissionDashboardTab.addEventListener("click", () => {
+    requestedDashboardPanel = "commissions";
+    selectDashboardPanel("commissions");
+  });
+
+  elements.commissionStatusFilter.addEventListener("change", renderCommissionInbox);
+  elements.refreshCommissions.addEventListener("click", loadCommissionInbox);
+
   db.auth.onAuthStateChange((_event, session) => {
     setTimeout(() => updateAuthView(session), 0);
   });
 
-  Promise.all([loadGallery(), getCurrentSession().then(updateAuthView)]).catch(error => {
-    console.error(error);
-    showToast("Something went wrong while starting the gallery.", "error");
-  });
+  Promise.all([loadGallery(), getCurrentSession().then(updateAuthView)])
+    .then(() => {
+      if (new URLSearchParams(window.location.search).get("admin") === "commissions") {
+        openAdminDialog("commissions");
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      showToast("Something went wrong while starting the gallery.", "error");
+    });
 })();

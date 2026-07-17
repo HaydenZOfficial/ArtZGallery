@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Send a private commission request directly to HadenZOfficial.">
+  <meta name="theme-color" content="#240037">
+  <title>Commission HadenZOfficial</title>
+  <link rel="icon" href="assets/Hadenz_Logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/Hadenz_Logo.png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="commission-form.js" defer></script>
+</head>
+<body class="commissions-page">
+  <a class="skip-link" href="#commission-form">Skip to commission request form</a>
+
+  <header class="site-header" id="top">
+    <a class="brand" href="index.html" aria-label="Return to HadenZ Gallery">
+      <img class="brand-logo" src="assets/Hadenz_Logo.png" alt="" aria-hidden="true">
+      <span>HadenZ Gallery</span>
+    </a>
+
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="sr-only">Open navigation</span>
+      <span></span><span></span>
+    </button>
+
+    <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+      <a href="index.html#gallery">Gallery</a>
+      <a href="index.html#about">About</a>
+      <a class="is-current" href="commissions.html" aria-current="page">Commissions</a>
+      <a href="index.html#links">Links</a>
+      <a class="nav-admin commission-nav-cta" href="index.html?admin=commissions">Artist inbox</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="commission-hero" aria-labelledby="commission-title">
+      <div class="commission-hero-copy">
+        <p class="eyebrow">Private commission portal</p>
+        <h1 id="commission-title">Send your idea straight to Haden.</h1>
+        <p class="commission-lede">
+          Fill out the request below. It will be delivered to a private inbox
+          that is visible only after the authorized artist account signs in.
+        </p>
+
+        <div class="commission-status-strip">
+          <span class="status-pulse" aria-hidden="true"></span>
+          <div>
+            <small>Important payment note</small>
+            <strong>Do not send payment until Haden confirms the request unless you already arranged it.</strong>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a class="button" href="#commission-form">Start a request</a>
+          <a class="button button-ghost" href="index.html#gallery">View artwork</a>
+        </div>
+      </div>
+
+      <div class="commission-orbit" aria-hidden="true">
+        <div class="orbit-ring orbit-ring-one"></div>
+        <div class="orbit-ring orbit-ring-two"></div>
+        <div class="commission-sigil">
+          <img src="assets/Hadenz_Logo.png" alt="">
+          <span>PRIVATE REQUEST PORTAL</span>
+        </div>
+        <span class="orbit-star orbit-star-one">✦</span>
+        <span class="orbit-star orbit-star-two">✧</span>
+        <span class="orbit-star orbit-star-three">★</span>
+      </div>
+    </section>
+
+    <section class="commission-request-section" aria-labelledby="request-title">
+      <div class="commission-request-copy">
+        <p class="eyebrow">Before you submit</p>
+        <h2 id="request-title">Give me enough to understand the vision.</h2>
+        <p>
+          You do not need professional art terminology. Character references,
+          sketches, playlists, color palettes, and plain descriptions are useful.
+        </p>
+
+        <div class="request-safety-note">
+          <strong>Payment verification</strong>
+          <p>
+            Selecting “I already paid” does not automatically prove payment.
+            It marks the request as <em>payment claimed</em>. Haden will check
+            PayPal or Ko-fi and manually change it to <em>paid — verified</em>.
+          </p>
+        </div>
+
+        <ul class="commission-prep-list">
+          <li>Explain what you want drawn.</li>
+          <li>Include reference links when possible.</li>
+          <li>State personal or commercial use.</li>
+          <li>Mention a deadline before booking.</li>
+          <li>Do not include passwords or card information.</li>
+        </ul>
+      </div>
+
+      <div class="commission-form-window" id="commission-form">
+        <div class="brief-window-bar">
+          <span>NEW_COMMISSION_REQUEST.form</span>
+          <span aria-hidden="true">— □ ×</span>
+        </div>
+
+        <form id="commission-request-form" class="commission-request-form" novalidate>
+          <input id="form-started-at" name="startedAt" type="hidden">
+
+          <label class="spam-trap" aria-hidden="true">
+            Website
+            <input name="website" type="text" tabindex="-1" autocomplete="off">
+          </label>
+
+          <div class="commission-form-grid">
+            <label>
+              Your name
+              <input name="name" type="text" maxlength="100" autocomplete="name" required>
+            </label>
+
+            <label>
+              Email
+              <input name="email" type="email" maxlength="200" autocomplete="email" required>
+            </label>
+
+            <label>
+              Preferred contact
+              <select name="contactMethod" required>
+                <option value="email">Email</option>
+                <option value="discord">Discord</option>
+                <option value="instagram">Instagram</option>
+                <option value="other">Other</option>
+              </select>
+            </label>
+
+            <label>
+              Contact username <span class="optional">optional</span>
+              <input name="contactHandle" type="text" maxlength="120" placeholder="@username or Discord name">
+            </label>
+
+            <label>
+              Commission type
+              <select name="commissionType" required>
+                <option value="">Choose one</option>
+                <option value="character">Character artwork</option>
+                <option value="illustration">Illustration or scene</option>
+                <option value="concept">Concept or design work</option>
+                <option value="reference_sheet">Reference sheet</option>
+                <option value="other">Something else</option>
+              </select>
+            </label>
+
+            <label>
+              Intended use
+              <select name="usageType" required>
+                <option value="personal">Personal use</option>
+                <option value="commercial">Commercial or promotional use</option>
+                <option value="unsure">Not sure yet</option>
+              </select>
+            </label>
+
+            <label>
+              Budget range <span class="optional">optional</span>
+              <input name="budget" type="text" maxlength="80" placeholder="Example: $80–$120">
+            </label>
+
+            <label>
+              Desired deadline <span class="optional">optional</span>
+              <input name="deadline" type="date">
+            </label>
+          </div>
+
+          <label>
+            Describe the commission
+            <textarea name="message" rows="8" minlength="30" maxlength="5000" required placeholder="Characters, pose, mood, background, colors, and any details that matter…"></textarea>
+          </label>
+
+          <label>
+            Reference links <span class="optional">optional</span>
+            <textarea name="referenceLinks" rows="3" maxlength="1500" placeholder="One or more links to character references, folders, palettes, or examples."></textarea>
+          </label>
+
+          <fieldset class="payment-claim-fieldset">
+            <legend>Payment information</legend>
+
+            <label>
+              Current payment situation
+              <select id="payment-claim" name="paymentClaim" required>
+                <option value="not_paid">I have not paid yet</option>
+                <option value="already_paid">I already paid or sent money by prior arrangement</option>
+              </select>
+            </label>
+
+            <div id="payment-details" class="payment-details" hidden>
+              <div class="commission-form-grid">
+                <label>
+                  Payment method
+                  <select name="paymentMethod">
+                    <option value="">Choose one</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="kofi">Ko-fi</option>
+                    <option value="other">Other</option>
+                  </select>
+                </label>
+
+                <label>
+                  Transaction or payment reference
+                  <input name="paymentReference" type="text" maxlength="180" placeholder="Do not enter card or bank details">
+                </label>
+              </div>
+
+              <p class="payment-warning">
+                This is only a claim for Haden to review. The inbox will show
+                “payment claimed” until the artist verifies the transaction.
+              </p>
+            </div>
+          </fieldset>
+
+          <label class="commission-consent">
+            <input name="consent" type="checkbox" required>
+            <span>I understand this is a request, not an automatic booking, and Haden may accept, adjust, waitlist, or decline it.</span>
+          </label>
+
+          <button id="submit-commission" class="button full-button" type="submit">Send private request</button>
+          <p id="commission-form-status" class="form-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <section id="commission-success" class="commission-success" hidden aria-live="polite">
+          <span aria-hidden="true">✦</span>
+          <h2>Request delivered.</h2>
+          <p>Your private reference number is:</p>
+          <strong id="commission-reference"></strong>
+          <p>Save that number. Haden can use it to identify your request.</p>
+          <button id="new-commission-request" class="button button-ghost" type="button">Send another request</button>
+        </section>
+      </div>
+    </section>
+
+    <section class="commission-process" aria-labelledby="process-title">
+      <div class="commission-process-intro">
+        <p class="eyebrow">What happens next</p>
+        <h2 id="process-title">A request is not a charge.</h2>
+        <p>
+          Haden reviews the request privately, discusses the scope with you,
+          and confirms payment separately before changing the request to paid.
+        </p>
+      </div>
+
+      <ol class="process-list">
+        <li>
+          <span>01</span>
+          <div>
+            <h3>Request received</h3>
+            <p>Your message appears in Haden’s private website inbox with a reference number.</p>
+          </div>
+        </li>
+        <li>
+          <span>02</span>
+          <div>
+            <h3>Scope reviewed</h3>
+            <p>Haden may contact you for references, changes, timing, usage, or a final quote.</p>
+          </div>
+        </li>
+        <li>
+          <span>03</span>
+          <div>
+            <h3>Payment verified</h3>
+            <p>After checking the actual PayPal or Ko-fi transaction, Haden marks the inbox record as paid — verified.</p>
+          </div>
+        </li>
+        <li>
+          <span>04</span>
+          <div>
+            <h3>Work begins</h3>
+            <p>The request can then move through accepted, in progress, and completed statuses.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer-signature">
+      <img class="footer-logo" src="assets/Hadenz_Logo.png" alt="" aria-hidden="true">
+      <span>© <span id="year"></span> HadenZOfficial. Commission requests are reviewed privately.</span>
+    </p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="index.html">Home</a>
+      <a href="index.html#gallery">Gallery</a>
+      <a href="index.html?admin=commissions">Artist inbox</a>
+      <a href="#top">Top ↑</a>
+    </nav>
+  </footer>
+</body>
+</html>
