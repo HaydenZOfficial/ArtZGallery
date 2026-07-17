@@ -2990,3 +2990,90 @@ input:focus, textarea:focus, select:focus { border-color: var(--gold-bright); bo
     font-size: clamp(3.2rem, 17vw, 5.5rem);
   }
 }
+
+
+/* =========================================================
+   Commission inbox action visibility update
+   ========================================================= */
+
+/* Refresh inbox: bright gold with dark readable text. */
+#refresh-commissions {
+  min-height: 42px;
+  padding: .58rem .78rem;
+  color: #240032;
+  background: #ffe36e;
+  border: 2px solid #fff3a8;
+  box-shadow: 4px 4px 0 #5c1d78;
+  cursor: pointer;
+  font-family: monospace;
+  font-size: .66rem;
+  font-weight: 900;
+  letter-spacing: .045em;
+  text-transform: uppercase;
+}
+
+#refresh-commissions:hover,
+#refresh-commissions:focus-visible {
+  color: #fff9cf;
+  background: #6c278d;
+  border-color: #ffe36e;
+  outline: 2px solid #ffe36e;
+  outline-offset: 2px;
+}
+
+/* Archive/restore: purple button with a strong gold outline. */
+.commission-archive-button {
+  min-height: 40px;
+  padding: .55rem .72rem;
+  color: #fff6bd;
+  background: #662685;
+  border: 2px solid #ffe36e;
+  box-shadow: 4px 4px 0 #160020;
+  cursor: pointer;
+  font-family: monospace;
+  font-size: .63rem;
+  font-weight: 900;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+.commission-archive-button:hover,
+.commission-archive-button:focus-visible {
+  color: #240032;
+  background: #ffe36e;
+  border-color: #fff3a8;
+  outline: 2px solid #b45cff;
+  outline-offset: 2px;
+}
+
+/* Permanent deletion is intentionally visually destructive. */
+.commission-delete-button {
+  min-height: 40px;
+  padding: .55rem .72rem;
+  color: #fff1f4;
+  background: #8e2447;
+  border: 2px solid #ff91ad;
+  box-shadow: 4px 4px 0 #22000c;
+  cursor: pointer;
+  font-family: monospace;
+  font-size: .63rem;
+  font-weight: 900;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+.commission-delete-button:hover,
+.commission-delete-button:focus-visible {
+  color: #24000b;
+  background: #ff91ad;
+  border-color: #ffd2dd;
+  outline: 2px solid #ff91ad;
+  outline-offset: 2px;
+}
+
+#refresh-commissions:disabled,
+.commission-archive-button:disabled,
+.commission-delete-button:disabled {
+  cursor: wait;
+  opacity: .7;
+}

@@ -829,14 +829,22 @@
 
     const archive = document.createElement("button");
     archive.type = "button";
-    archive.className = "small-button";
+    archive.className = "small-button commission-archive-button";
     archive.textContent = request.request_status === "archived" ? "Restore to reviewing" : "Archive";
     archive.addEventListener("click", async () => {
       requestStatus.value = request.request_status === "archived" ? "reviewing" : "archived";
       await saveCommissionRequest(request.id, article, archive);
     });
 
-    actions.append(save, email, archive);
+    const deleteRequest = document.createElement("button");
+    deleteRequest.type = "button";
+    deleteRequest.className = "small-button commission-delete-button";
+    deleteRequest.textContent = "Delete request";
+    deleteRequest.addEventListener("click", () => {
+      deleteCommissionRequest(request, deleteRequest);
+    });
+
+    actions.append(save, email, archive, deleteRequest);
     article.append(header, contact, summary, messageBlock, controls, actions);
     return article;
   }
@@ -853,6 +861,39 @@
     elements.commissionInboxEmpty.hidden = visible.length !== 0;
   }
 
+
+  async function deleteCommissionRequest(request, button) {
+    const session = await getCurrentSession();
+    if (session?.user?.id !== CONFIG.adminUserId) {
+      showToast("Your artist session expired.", "error");
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `Permanently delete commission request ${request.reference_code} from ${request.name}?\n\nThis cannot be undone.`
+    );
+
+    if (!confirmed) return;
+
+    const originalButtonText = button.textContent;
+    setBusy(button, true, "Deleting…", originalButtonText);
+
+    const { error } = await db
+      .from(CONFIG.commissionTable)
+      .delete()
+      .eq("id", request.id);
+
+    setBusy(button, false, "Deleting…", originalButtonText);
+
+    if (error) {
+      showToast(error.message, "error");
+      return;
+    }
+
+    showToast(`Deleted request ${request.reference_code}.`);
+    await loadCommissionInbox();
+  }
+
   async function saveCommissionRequest(id, card, button) {
     const session = await getCurrentSession();
     if (session?.user?.id !== CONFIG.adminUserId) {
@@ -864,8 +905,9 @@
     const paymentStatus = $(".payment-status-select", card).value;
     const quoteValue = $(".commission-quote-input", card).value.trim();
     const artistNotes = $(".commission-notes-input", card).value.trim();
+    const originalButtonText = button.textContent;
 
-    setBusy(button, true, "Saving…", button.textContent);
+    setBusy(button, true, "Saving…", originalButtonText);
 
     const { error } = await db
       .from(CONFIG.commissionTable)
@@ -877,7 +919,7 @@
       })
       .eq("id", id);
 
-    setBusy(button, false, "Saving…", button.textContent);
+    setBusy(button, false, "Saving…", originalButtonText);
 
     if (error) {
       showToast(error.message, "error");
