@@ -3,579 +3,348 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Send a private commission request directly to HadenZOfficial.">
-  <meta name="theme-color" content="#240037">
-  <title>Commission HadenZOfficial</title>
+  <meta name="description" content="HadenZOfficial commission prices, creative boundaries, terms, and private request portal.">
+  <meta name="theme-color" content="#110018">
+  <title>Commission Channel // HadenZ</title>
   <link rel="icon" href="assets/Hadenz_Logo.png" type="image/png">
   <link rel="apple-touch-icon" href="assets/Hadenz_Logo.png">
-  <link rel="stylesheet" href="styles.css?v=commission-prices-tos-1">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=beyond-the-frame-1">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="commission-form.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js" defer></script>
+  <script src="commission-form.js?v=private-commission-portal-1" defer></script>
+  <script src="motion.js?v=beyond-the-frame-1" defer></script>
 </head>
-<body class="commissions-page">
-  <a class="skip-link" href="#commission-form">Skip to commission request form</a>
+<body class="commission-page" data-menu-theme="commission">
+  <a class="skip-link" href="#request">Skip to commission request</a>
+
+  <div id="preloader" class="preloader" aria-hidden="true">
+    <div class="preloader-noise"></div>
+    <div class="preloader-mark">
+      <span class="preloader-slash">/</span>
+      <img src="assets/Hadenz_Logo.png" alt="">
+      <span class="preloader-word">REQUEST</span>
+    </div>
+    <p class="preloader-status"><span>OPENING PRIVATE CHANNEL</span><i></i></p>
+  </div>
+
+  <div class="page-transition" aria-hidden="true">
+    <span class="page-transition-word">ENTER</span>
+  </div>
+
+  <div class="ambient-world" aria-hidden="true">
+    <div class="ambient-gradient"></div>
+    <div class="ambient-grid"></div>
+    <div class="ambient-orbit orbit-one"></div>
+    <div class="ambient-orbit orbit-two"></div>
+    <div class="ambient-symbol symbol-one">✦</div>
+    <div class="ambient-symbol symbol-two">◌</div>
+    <div class="ambient-symbol symbol-three">+</div>
+    <div class="ambient-grain"></div>
+    <div class="ambient-vignette"></div>
+  </div>
+
+  <div class="cursor" aria-hidden="true"><span></span></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
 
   <header class="site-header" id="top">
-    <a class="brand" href="index.html" aria-label="Return to HadenZ Gallery">
-      <img class="brand-logo" src="assets/Hadenz_Logo.png" alt="" aria-hidden="true">
-      <span>HadenZ Gallery</span>
+    <a class="brand magnetic" href="index.html" data-transition="HOME" aria-label="Return to the HadenZ gallery">
+      <span class="brand-logo-wrap"><img class="brand-logo" src="assets/Hadenz_Logo.png" alt="" aria-hidden="true"></span>
+      <span class="brand-copy"><strong>HADENZ</strong><small>COMMISSION CHANNEL</small></span>
     </a>
 
-    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
-      <span class="sr-only">Open navigation</span>
-      <span></span><span></span>
-    </button>
+    <div class="header-status" aria-hidden="true">
+      <span class="status-dot commission-status-dot"></span>
+      <span>REQUEST LINE OPEN</span>
+      <span class="header-coordinates">SECURE / PRIVATE</span>
+    </div>
 
-    <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
-      <a href="index.html#gallery">Gallery</a>
-      <a href="index.html#about">About</a>
-      <a class="is-current" href="commissions.html" aria-current="page">Commissions</a>
-      <a href="index.html#links">Links</a>
-      <a class="nav-admin commission-nav-cta" href="index.html?admin=commissions">Artist inbox</a>
-    </nav>
+    <button class="menu-button magnetic" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="sr-only">Open navigation</span>
+      <span class="menu-index">MENU</span>
+      <span class="menu-icon"><i></i><i></i></span>
+    </button>
   </header>
 
+  <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+    <div class="nav-atmosphere" aria-hidden="true">
+      <span class="nav-giant-word">REQUEST</span>
+      <span class="nav-cross nav-cross-one">+</span>
+      <span class="nav-cross nav-cross-two">+</span>
+      <img class="nav-character" src="assets/ZenTailWag_YCH.gif" alt="">
+    </div>
+
+    <div class="nav-intro">
+      <p>HADENZ // CREATIVE ARCHIVE</p>
+      <span>SELECT A BREACH POINT</span>
+    </div>
+
+    <div class="nav-links">
+      <a class="nav-link" href="index.html#gallery" data-transition="GALLERY" data-nav-theme="gallery" data-nav-word="GALLERY">
+        <span class="nav-number">01</span><span class="nav-label">Enter the Gallery</span><span class="nav-arrow">↗</span>
+      </a>
+      <a class="nav-link" href="index.html#about" data-transition="CREATOR" data-nav-theme="artist" data-nav-word="CREATOR">
+        <span class="nav-number">02</span><span class="nav-label">Meet the Creator</span><span class="nav-arrow">↗</span>
+      </a>
+      <a class="nav-link" href="#pricing" data-nav-theme="commission" data-nav-word="PRICES">
+        <span class="nav-number">03</span><span class="nav-label">View the Price Files</span><span class="nav-arrow">↘</span>
+      </a>
+      <a class="nav-link" href="#request" data-nav-theme="signal" data-nav-word="TRANSMIT">
+        <span class="nav-number">04</span><span class="nav-label">Build a Request</span><span class="nav-arrow">↘</span>
+      </a>
+      <a class="nav-link" href="index.html?admin=commissions" data-transition="INBOX" data-nav-theme="admin" data-nav-word="PRIVATE">
+        <span class="nav-number">05</span><span class="nav-label">Artist Inbox</span><span class="nav-arrow">↗</span>
+      </a>
+    </div>
+
+    <div class="nav-footer">
+      <span>PRICES</span><span>BOUNDARIES</span><span>TERMS</span><span>PRIVATE REQUESTS</span>
+    </div>
+  </nav>
+
   <main>
-    <section class="commission-hero" aria-labelledby="commission-title">
-      <div class="commission-hero-copy">
-        <p class="eyebrow">Private commission portal</p>
-        <h1 id="commission-title">Send your idea straight to Haden.</h1>
-        <p class="commission-lede">
-          Fill out the request below. It will be delivered to a private inbox
-          that is visible only after the authorized artist account signs in.
-        </p>
+    <section class="hero commission-hero" aria-labelledby="commission-hero-title">
+      <div class="hero-backtype commission-backtype" aria-hidden="true">
+        <span class="hero-backtype-top">OPEN A</span>
+        <span class="hero-backtype-bottom">CHANNEL</span>
+      </div>
 
-        <div class="commission-status-strip">
-          <span class="status-pulse" aria-hidden="true"></span>
-          <div>
-            <small>Important payment note</small>
-            <strong>Do not send payment until Haden confirms the request unless you already arranged it.</strong>
-          </div>
-        </div>
-
+      <div class="hero-copy" data-reveal>
+        <p class="eyebrow"><span>REQ-001</span> Private commission portal</p>
+        <h1 id="commission-hero-title" class="hero-title">
+          <span class="hero-title-small">BUILD A</span>
+          <span class="hero-title-main">COMMISSION</span>
+          <span class="hero-title-outline">REQUEST</span>
+        </h1>
+        <p class="hero-text">Choose a service, check the creative boundaries, and send the details through a private channel visible only to the artist account.</p>
         <div class="hero-actions">
-          <a class="button" href="#commission-form">Start a request</a>
-          <a class="button button-ghost" href="#pricing">Prices &amp; policies</a>
-          <a class="button button-ghost" href="index.html#gallery">View artwork</a>
+          <a class="button button-primary magnetic" href="#pricing"><span>READ THE FILES</span><i>↘</i></a>
+          <a class="button button-ghost magnetic" href="#request"><span>START REQUEST</span><i>↓</i></a>
         </div>
       </div>
 
-      <div class="commission-orbit" aria-hidden="true">
-        <div class="orbit-ring orbit-ring-one"></div>
-        <div class="orbit-ring orbit-ring-two"></div>
-        <div class="commission-sigil">
-          <img src="assets/Hadenz_Logo.png" alt="">
-          <span>PRIVATE REQUEST PORTAL</span>
+      <div class="hero-character-stage commission-character-stage" aria-label="Animated HadenZ commission guide character">
+        <div class="character-halo" aria-hidden="true"></div>
+        <div class="character-nameplate commission-nameplate" aria-hidden="true">
+          <span>CHANNEL GUIDE</span><strong>ZEN</strong><small>REQUEST PROTOCOL // ACTIVE</small>
         </div>
-        <span class="orbit-star orbit-star-one">✦</span>
-        <span class="orbit-star orbit-star-two">✧</span>
-        <span class="orbit-star orbit-star-three">★</span>
+        <div class="character-shadow" aria-hidden="true"></div>
+        <img class="hero-character" src="assets/ZenTailWag_YCH.gif" alt="Animated brown canine character wagging its tail">
+        <img class="hero-character-echo echo-one" src="assets/ZenTailWag_YCH.gif" alt="" aria-hidden="true">
+        <img class="hero-character-echo echo-two" src="assets/ZenTailWag_YCH.gif" alt="" aria-hidden="true">
+        <div class="character-sticker sticker-one" aria-hidden="true">AUTHORIZED REQUESTS</div>
+        <div class="character-sticker sticker-two" aria-hidden="true">✦ CHANNEL OPEN ✦</div>
       </div>
+
+      <aside class="commission-hero-readout" aria-label="Commission process summary">
+        <span><b>01</b> CHOOSE</span>
+        <span><b>02</b> DEFINE</span>
+        <span><b>03</b> TRANSMIT</span>
+      </aside>
+
+      <a class="scroll-breach magnetic" href="#pricing" aria-label="Scroll to commission prices"><span>OPEN</span><i>↓</i></a>
     </section>
 
-    <nav class="commission-page-nav" aria-label="Commission page sections">
-      <a href="#pricing">Pricing</a>
-      <a href="#dos-donts">Do’s &amp; Don’ts</a>
-      <a href="#guide-notes">Guide &amp; Notes</a>
-      <a href="#terms">Terms of Service</a>
-      <a href="#commission-form">Request Form</a>
+    <nav class="commission-rail" aria-label="Commission page sections">
+      <span>REQUEST PROTOCOL</span>
+      <a href="#pricing">01 / PRICES</a>
+      <a href="#boundaries">02 / BOUNDARIES</a>
+      <a href="#terms">03 / TERMS</a>
+      <a href="#request">04 / TRANSMIT</a>
     </nav>
 
-    <section id="pricing" class="commission-info-section commission-pricing-section" aria-labelledby="pricing-title">
-      <div class="commission-info-heading">
+    <section id="pricing" class="scene-section commission-pricing" data-scene="commission" aria-labelledby="pricing-title">
+      <div class="section-heading" data-reveal>
         <div>
-          <p class="eyebrow">Starting price guide</p>
-          <h2 id="pricing-title">Choose the crop and finish.</h2>
+          <p class="eyebrow"><span>01</span> Price archive</p>
+          <h2 id="pricing-title">SELECT A<br><em>FILE TYPE</em></h2>
         </div>
-        <p class="commission-info-stamp" aria-hidden="true">PRICE FILE<br>01</p>
+        <div class="section-heading-side"><p>Prices are starting points in USD. Complexity, extra characters, detailed backgrounds, and special requirements can change the final quote.</p></div>
       </div>
 
-      <div class="commission-pricing-layout">
-        <div class="pricing-table-card">
-          <div class="pricing-table-scroll">
-            <table class="commission-pricing-table">
-              <caption>Starting prices by crop and rendering style</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Cropping</th>
-                  <th scope="col">Lineart</th>
-                  <th scope="col">Flat Color</th>
-                  <th scope="col">Minimal Render</th>
-                  <th scope="col">Full Render</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Headshot</th>
-                  <td>$5</td>
-                  <td>$15</td>
-                  <td>$20</td>
-                  <td>$30</td>
-                </tr>
-                <tr>
-                  <th scope="row">Half Body</th>
-                  <td>$8</td>
-                  <td>$17</td>
-                  <td>$25</td>
-                  <td>$35</td>
-                </tr>
-                <tr>
-                  <th scope="row">Knee Up</th>
-                  <td>$10</td>
-                  <td>$20</td>
-                  <td>$30</td>
-                  <td>$40+</td>
-                </tr>
-                <tr>
-                  <th scope="row">Full Body</th>
-                  <td>$13</td>
-                  <td>$25</td>
-                  <td>$35</td>
-                  <td>$50+</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      <div class="pricing-grid" data-reveal>
+        <article class="price-file magnetic-card">
+          <header><span>FILE / 01</span><h3>Headshot</h3><b>Portrait focus</b></header>
+          <dl><div><dt>Lineart</dt><dd>$5</dd></div><div><dt>Flat color</dt><dd>$15</dd></div><div><dt>Minimal shading</dt><dd>$20</dd></div><div><dt>Full shading</dt><dd>$30</dd></div></dl>
+          <footer><span>FACE / BUST</span><i>01</i></footer>
+        </article>
+        <article class="price-file magnetic-card">
+          <header><span>FILE / 02</span><h3>Half Body</h3><b>Waist-up composition</b></header>
+          <dl><div><dt>Lineart</dt><dd>$8</dd></div><div><dt>Flat color</dt><dd>$17</dd></div><div><dt>Minimal shading</dt><dd>$25</dd></div><div><dt>Full shading</dt><dd>$35</dd></div></dl>
+          <footer><span>WAIST / UP</span><i>02</i></footer>
+        </article>
+        <article class="price-file magnetic-card">
+          <header><span>FILE / 03</span><h3>Knee Up</h3><b>Expanded character view</b></header>
+          <dl><div><dt>Lineart</dt><dd>$10</dd></div><div><dt>Flat color</dt><dd>$20</dd></div><div><dt>Minimal shading</dt><dd>$30</dd></div><div><dt>Full shading</dt><dd>$40+</dd></div></dl>
+          <footer><span>KNEE / UP</span><i>03</i></footer>
+        </article>
+        <article class="price-file price-file-featured magnetic-card">
+          <header><span>FILE / 04</span><h3>Full Body</h3><b>Complete character art</b></header>
+          <dl><div><dt>Lineart</dt><dd>$13</dd></div><div><dt>Flat color</dt><dd>$25</dd></div><div><dt>Minimal shading</dt><dd>$35</dd></div><div><dt>Full shading</dt><dd>$50+</dd></div></dl>
+          <footer><span>FULL / FRAME</span><i>04</i></footer>
+        </article>
+      </div>
 
-          <p class="pricing-disclaimer">
-            These are starting estimates. Complexity, extra characters,
-            backgrounds, commercial use, deadlines, and unusual requests may
-            change the final quote.
-          </p>
-        </div>
-
-        <aside class="other-offers-card" aria-labelledby="other-offers-title">
-          <p class="eyebrow">Other offers</p>
-          <h3 id="other-offers-title">Special request pricing</h3>
-
-          <dl class="other-offers-list">
-            <div>
-              <dt>Emote / Sticker</dt>
-              <dd>~$10–$15+</dd>
-            </div>
-            <div>
-              <dt>Character Design</dt>
-              <dd>Ask / TBA</dd>
-            </div>
-            <div>
-              <dt>Reference Sheet</dt>
-              <dd>~$20–$55+</dd>
-            </div>
-            <div>
-              <dt>VRC Retexture <small>Furry only</small></dt>
-              <dd>~$30+</dd>
-            </div>
-            <div>
-              <dt>Animation Memes</dt>
-              <dd>Ask / TBA</dd>
-            </div>
-          </dl>
-        </aside>
+      <div class="specialty-strip" data-reveal>
+        <div><span>EXTRA / A</span><strong>Emote or Sticker</strong><b>~$10–$15+</b></div>
+        <div><span>EXTRA / B</span><strong>Reference Sheet</strong><b>~$20–$55+</b></div>
+        <div><span>EXTRA / C</span><strong>VRC Retexture</strong><b>~$30+</b><small>Furry models only</small></div>
+        <div><span>EXTRA / D</span><strong>Character Design</strong><b>ASK / TBA</b></div>
+        <div><span>EXTRA / E</span><strong>Animation Meme</strong><b>ASK / TBA</b></div>
       </div>
     </section>
 
-    <section id="dos-donts" class="commission-info-section commission-boundaries-section" aria-labelledby="boundaries-title">
-      <div class="commission-info-heading">
-        <div>
-          <p class="eyebrow">Creative boundaries</p>
-          <h2 id="boundaries-title">Do’s and Don’ts.</h2>
-        </div>
-        <p class="commission-info-stamp" aria-hidden="true">BOUNDARY FILE<br>02</p>
+    <section id="boundaries" class="scene-section boundaries-section" data-scene="artist" aria-labelledby="boundaries-title">
+      <div class="boundaries-backtype" aria-hidden="true">BOUNDARIES</div>
+      <div class="section-heading boundary-heading" data-reveal>
+        <div><p class="eyebrow"><span>02</span> Creative boundaries</p><h2 id="boundaries-title">KNOW THE<br><em>LIMITS</em></h2></div>
+        <div class="section-heading-side"><p>A clear brief makes the process faster. Read both files before submitting, especially for mature, violent, political, or commercial material.</p></div>
       </div>
 
-      <div class="commission-boundary-note">
-        <p><strong>Note:</strong> I reserve the right to decline any commission request that falls outside my skill range or makes me uncomfortable.</p>
-        <p>If you do not see something you are looking for in these lists, feel free to ask—I am always open to discussing ideas.</p>
-        <p>Please keep in mind that I am constantly improving my craft. While I strive to deliver my best work, some listed subjects may still be areas I am practicing.</p>
-      </div>
-
-      <div class="commission-boundary-grid">
-        <article class="commission-boundary-card is-accepted">
-          <div class="boundary-card-heading">
-            <span aria-hidden="true">✓</span>
-            <div>
-              <p class="eyebrow">Accepted subjects</p>
-              <h3>Things I can work with</h3>
-            </div>
-          </div>
-
-          <ul class="boundary-list">
-            <li><strong>Personal and commercial projects</strong></li>
-            <li><strong>SFW content:</strong> General, non-explicit artwork.</li>
-            <li><strong>NSFW or suggestive:</strong> Minimal sexual or mature themes portrayed safely and respectfully. NSFW commissions require age verification before acceptance.</li>
-            <li><strong>Humans:</strong> Including kemonomimi, hybrids, and humans with additional features.</li>
-            <li><strong>Anthropomorphic characters:</strong> Furries and similar designs.</li>
-            <li><strong>Creatures:</strong> Animals, ferals, monsters, and fantasy species.</li>
-            <li><strong>Slight gore:</strong> Light blood, scars, or minor injuries.</li>
-            <li><strong>Robots, mecha, and armor designs</strong></li>
+      <div class="boundary-grid">
+        <article class="boundary-file boundary-accepted" data-reveal>
+          <div class="boundary-file-mark">✓</div>
+          <header><span>ACCEPTED SUBJECTS</span><h3>GREEN FILE</h3></header>
+          <ul>
+            <li>Humans, kemonomimi, hybrids, and original characters</li>
+            <li>Anthro characters, furries, creatures, animals, and ferals</li>
+            <li>Monsters, fantasy designs, robots, mecha, and armor</li>
+            <li>Suggestive or adult work with proper age verification</li>
+            <li>Light gore and dramatic horror imagery</li>
           </ul>
         </article>
 
-        <article class="commission-boundary-card is-declined">
-          <div class="boundary-card-heading">
-            <span aria-hidden="true">×</span>
-            <div>
-              <p class="eyebrow">Declined subjects</p>
-              <h3>Things I will not accept</h3>
-            </div>
-          </div>
-
-          <ul class="boundary-list">
-            <li><strong>Long-term projects:</strong> Multiple comic pages, lengthy animations, and similarly extended commitments.</li>
-            <li><strong>Unhealthy NSFW:</strong> Non-consensual acts, sexual violence, exploitation, coercion, or sexual content involving underage characters.</li>
-            <li><strong>Heavy gore:</strong> Exposed internal organs or extreme mutilation and disfigurement.</li>
-            <li><strong>NFT use:</strong> Non-fungible tokens or mass resale and distribution to multiple owners.</li>
-            <li><strong>Political themes or hateful content:</strong> Racism, homophobia, transphobia, or related hateful material.</li>
-            <li><strong>AI training:</strong> Using the artwork to train, generate, or feed into AI models or datasets.</li>
+        <article class="boundary-file boundary-declined" data-reveal>
+          <div class="boundary-file-mark">×</div>
+          <header><span>DECLINED SUBJECTS</span><h3>RED FILE</h3></header>
+          <ul>
+            <li>Long-term comic or animation production commitments</li>
+            <li>Sexual violence, coercion, exploitation, or any sexual content involving minors</li>
+            <li>Heavy or extreme gore</li>
+            <li>Hateful content or discriminatory propaganda</li>
+            <li>NFT use, AI training, or dataset use of commissioned artwork</li>
           </ul>
         </article>
       </div>
     </section>
 
-    <section id="guide-notes" class="commission-info-section commission-guide-section" aria-labelledby="guide-title">
-      <div class="commission-info-heading">
-        <div>
-          <p class="eyebrow">Working together</p>
-          <h2 id="guide-title">Guide &amp; Notes.</h2>
-        </div>
-        <p class="commission-info-stamp" aria-hidden="true">PROJECT FILE<br>03</p>
+    <section id="terms" class="scene-section terms-section" data-scene="signal" aria-labelledby="terms-title">
+      <div class="section-heading" data-reveal>
+        <div><p class="eyebrow"><span>03</span> Agreement protocol</p><h2 id="terms-title">READ BEFORE<br><em>TRANSMISSION</em></h2></div>
+        <div class="section-heading-side"><p>Submitting the form starts a conversation, not an automatic acceptance. Final scope, price, schedule, and payment details are confirmed directly.</p></div>
       </div>
 
-      <ol class="commission-guide-grid">
-        <li>
-          <span>01</span>
-          <div>
-            <h3>Communication</h3>
-            <p>Please provide clear references, descriptions, and details of what you want. This helps ensure accurate results and avoids misunderstandings.</p>
-          </div>
-        </li>
-        <li>
-          <span>02</span>
-          <div>
-            <h3>Revisions</h3>
-            <p>Minor revisions are allowed during the sketch and coloring stages. Major changes after finalization may incur an additional fee.</p>
-          </div>
-        </li>
-        <li>
-          <span>03</span>
-          <div>
-            <h3>Deadlines</h3>
-            <p>Turnaround time may vary depending on workload, complexity, or project type. Tell the artist about a specific deadline before booking so availability can be confirmed.</p>
-          </div>
-        </li>
-        <li>
-          <span>04</span>
-          <div>
-            <h3>Commercial vs. Personal Use</h3>
-            <p><strong>Personal use</strong> includes profile pictures, wallpapers, personal displays, and similar use.</p>
-            <p><strong>Commercial use</strong> includes merchandise, promotional materials, or content that generates income. Please clarify the intended use when ordering.</p>
-          </div>
-        </li>
-        <li>
-          <span>05</span>
-          <div>
-            <h3>Respect &amp; Boundaries</h3>
-            <p>Please remain respectful throughout communication. Rude, disrespectful, threatening, or excessively demanding behavior will not be tolerated.</p>
-          </div>
-        </li>
-      </ol>
-    </section>
-
-    <section id="terms" class="commission-info-section commission-terms-section" aria-labelledby="terms-title">
-      <div class="commission-info-heading">
-        <div>
-          <p class="eyebrow">Read before requesting</p>
-          <h2 id="terms-title">Terms of Service.</h2>
-        </div>
-        <p class="commission-info-stamp" aria-hidden="true">TERMS FILE<br>04</p>
-      </div>
-
-      <p class="terms-introduction">
-        By commissioning the artist, the client agrees to the following terms.
-        A request is not automatically accepted; project-specific details may
-        be confirmed privately before work begins.
-      </p>
-
-      <div class="commission-terms-grid">
-        <article>
-          <span>01</span>
-          <h3>Usage Rights</h3>
-          <ul>
-            <li>The commissioned artwork may be used for personal or agreed commercial purposes, provided clear artist credit is given where applicable.</li>
-            <li>Do not claim, trace, heavily edit, or modify the artwork without the artist’s permission.</li>
-            <li>Contact the artist for assistance or approval before making small edits or adjustments.</li>
-          </ul>
-        </article>
-
-        <article>
-          <span>02</span>
-          <h3>Payment</h3>
-          <ul>
-            <li>Payment may be made partially at 50% or in full before work begins, depending on the project’s complexity.</li>
-            <li>All payment must be completed before the final artwork is delivered.</li>
-            <li>The artist will provide accepted payment methods privately before starting the commission.</li>
-          </ul>
-        </article>
-
-        <article>
-          <span>03</span>
-          <h3>Refund Policy</h3>
-          <ul>
-            <li>Full refunds are available only before any work has started.</li>
-            <li>Partial refunds may be offered for projects in progress that have not yet been completed.</li>
-            <li>No refunds will be issued after the artwork is fully completed and delivered.</li>
-          </ul>
-        </article>
-
-        <article>
-          <span>04</span>
-          <h3>Cancellations &amp; Violations</h3>
-          <ul>
-            <li>The artist may cancel a commission at any stage if the client violates the terms, behaves inappropriately, or makes unreasonable demands.</li>
-            <li>Breaking these terms may result in cancellation, refusal of future commissions, blocking, or blacklisting.</li>
-          </ul>
-        </article>
-
-        <article>
-          <span>05</span>
-          <h3>Copyright &amp; Ownership</h3>
-          <ul>
-            <li>The artist retains copyright over the artwork, including the right to post, use, or display it in portfolios, examples, and promotion.</li>
-            <li>Clients may request that a commission remain private, but this must be discussed before work begins.</li>
-          </ul>
-        </article>
-      </div>
-
-      <div class="terms-final-note">
-        <strong>Questions are welcome.</strong>
-        <p>Ask for clarification before paying or approving the commission if any term is unclear.</p>
+      <div class="terms-timeline" data-reveal>
+        <article><span>01</span><div><h3>Request review</h3><p>Your brief is reviewed for subject, scope, schedule, and fit. A request can be declined before payment or work begins.</p></div></article>
+        <article><span>02</span><div><h3>Quote and payment</h3><p>The final quote may differ from the starting prices. Do not send payment until the artist confirms the request and payment instructions.</p></div></article>
+        <article><span>03</span><div><h3>Creation and revisions</h3><p>Provide complete references early. Major changes after approval may require a new quote or added fee.</p></div></article>
+        <article><span>04</span><div><h3>Usage and credit</h3><p>Personal use is the default unless commercial usage is discussed. The artwork may not be used for NFTs or AI training.</p></div></article>
       </div>
     </section>
 
-    <section class="commission-request-section" aria-labelledby="request-title">
-      <div class="commission-request-copy">
-        <p class="eyebrow">Before you submit</p>
-        <h2 id="request-title">Give me enough to understand the vision.</h2>
-        <p>
-          You do not need professional art terminology. Character references,
-          sketches, playlists, color palettes, and plain descriptions are useful.
-        </p>
-
-        <div class="request-safety-note">
-          <strong>Payment verification</strong>
-          <p>
-            Selecting “I already paid” does not automatically prove payment.
-            It marks the request as <em>payment claimed</em>. Haden will check
-            PayPal or Ko-fi and manually change it to <em>paid — verified</em>.
-          </p>
-        </div>
-
-        <ul class="commission-prep-list">
-          <li>Explain what you want drawn.</li>
-          <li>Include reference links when possible.</li>
-          <li>State personal or commercial use.</li>
-          <li>Mention a deadline before booking.</li>
-          <li>Do not include passwords or card information.</li>
-        </ul>
+    <section id="request" class="request-section" data-scene="commission" aria-labelledby="request-title">
+      <div class="request-atmosphere" aria-hidden="true">
+        <span>TRANSMIT</span><i></i><b>PRIVATE CHANNEL // ENCRYPTED ROUTE</b>
       </div>
 
-      <div class="commission-form-window" id="commission-form">
-        <div class="brief-window-bar">
-          <span>NEW_COMMISSION_REQUEST.form</span>
-          <span aria-hidden="true">— □ ×</span>
+      <div class="request-heading" data-reveal>
+        <p class="eyebrow"><span>04</span> Private request terminal</p>
+        <h2 id="request-title">BUILD THE<br><em>BRIEF</em></h2>
+        <p>Give enough information for an accurate reply. References can be shared as viewable links. Only the authorized artist account can access submissions.</p>
+      </div>
+
+      <div class="request-terminal" data-reveal>
+        <div class="terminal-topbar" aria-hidden="true">
+          <span><i></i> HADENZ / REQUEST UPLINK</span>
+          <span>SECURE FORM</span>
+          <b>● ● ●</b>
         </div>
 
-        <form id="commission-request-form" class="commission-request-form" novalidate>
+        <form id="commission-request-form" class="commission-request-form">
           <input id="form-started-at" name="startedAt" type="hidden">
+          <label class="honeypot-field" aria-hidden="true">Website<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
 
-          <label class="spam-trap" aria-hidden="true">
-            Website
-            <input name="website" type="text" tabindex="-1" autocomplete="off">
-          </label>
-
-          <div class="commission-form-grid">
-            <label>
-              Your name
-              <input name="name" type="text" maxlength="100" autocomplete="name" required>
-            </label>
-
-            <label>
-              Email
-              <input name="email" type="email" maxlength="200" autocomplete="email" required>
-            </label>
-
-            <label>
-              Preferred contact
-              <select name="contactMethod" required>
-                <option value="email">Email</option>
-                <option value="discord">Discord</option>
-                <option value="instagram">Instagram</option>
-                <option value="other">Other</option>
-              </select>
-            </label>
-
-            <label>
-              Contact username <span class="optional">optional</span>
-              <input name="contactHandle" type="text" maxlength="120" placeholder="@username or Discord name">
-            </label>
-
-            <label>
-              Commission type
-              <select name="commissionType" required>
-                <option value="">Choose one</option>
-                <option value="character">Character artwork</option>
-                <option value="illustration">Illustration or scene</option>
-                <option value="concept">Concept or design work</option>
-                <option value="reference_sheet">Reference sheet</option>
-                <option value="other">Something else</option>
-              </select>
-            </label>
-
-            <label>
-              Intended use
-              <select name="usageType" required>
-                <option value="personal">Personal use</option>
-                <option value="commercial">Commercial or promotional use</option>
-                <option value="unsure">Not sure yet</option>
-              </select>
-            </label>
-
-            <label>
-              Budget range <span class="optional">optional</span>
-              <input name="budget" type="text" maxlength="80" placeholder="Example: $80–$120">
-            </label>
-
-            <label>
-              Desired deadline <span class="optional">optional</span>
-              <input name="deadline" type="date">
-            </label>
-          </div>
-
-          <label>
-            Describe the commission
-            <textarea name="message" rows="8" minlength="30" maxlength="5000" required placeholder="Characters, pose, mood, background, colors, and any details that matter…"></textarea>
-          </label>
-
-          <label>
-            Reference links <span class="optional">optional</span>
-            <textarea name="referenceLinks" rows="3" maxlength="1500" placeholder="One or more links to character references, folders, palettes, or examples."></textarea>
-          </label>
-
-          <fieldset class="payment-claim-fieldset">
-            <legend>Payment information</legend>
-
-            <label>
-              Current payment situation
-              <select id="payment-claim" name="paymentClaim" required>
-                <option value="not_paid">I have not paid yet</option>
-                <option value="already_paid">I already paid or sent money by prior arrangement</option>
-              </select>
-            </label>
-
-            <div id="payment-details" class="payment-details" hidden>
-              <div class="commission-form-grid">
-                <label>
-                  Payment method
-                  <select name="paymentMethod">
-                    <option value="">Choose one</option>
-                    <option value="paypal">PayPal</option>
-                    <option value="kofi">Ko-fi</option>
-                    <option value="other">Other</option>
-                  </select>
-                </label>
-
-                <label>
-                  Transaction or payment reference
-                  <input name="paymentReference" type="text" maxlength="180" placeholder="Do not enter card or bank details">
-                </label>
-              </div>
-
-              <p class="payment-warning">
-                This is only a claim for Haden to review. The inbox will show
-                “payment claimed” until the artist verifies the transaction.
-              </p>
+          <fieldset class="form-stage">
+            <legend><span>01</span><strong>IDENTIFY THE SENDER</strong><small>CONTACT FILE</small></legend>
+            <div class="form-grid two-column">
+              <label>Your name <b>required</b><input name="name" type="text" maxlength="100" autocomplete="name" required placeholder="Name or display name"></label>
+              <label>Email <b>required</b><input name="email" type="email" maxlength="200" autocomplete="email" required placeholder="you@example.com"></label>
+              <label>Preferred contact <b>required</b>
+                <select name="contactMethod" required>
+                  <option value="">Choose a channel</option><option value="Email">Email</option><option value="Discord">Discord</option><option value="Instagram">Instagram</option><option value="Bluesky">Bluesky</option><option value="Other">Other</option>
+                </select>
+              </label>
+              <label>Contact handle <b>required</b><input name="contactHandle" type="text" maxlength="160" required placeholder="Username, tag, or address"></label>
             </div>
           </fieldset>
 
-          <label class="commission-consent">
-            <input name="termsAccepted" type="checkbox" required>
-            <span>I have read and agree to the <a href="#terms">Terms of Service</a> and <a href="#dos-donts">Do’s &amp; Don’ts</a>.</span>
-          </label>
+          <fieldset class="form-stage">
+            <legend><span>02</span><strong>DEFINE THE COMMISSION</strong><small>PROJECT FILE</small></legend>
+            <div class="form-grid two-column">
+              <label>Commission type <b>required</b>
+                <select name="commissionType" required>
+                  <option value="">Select a service</option><option value="Headshot">Headshot</option><option value="Half Body">Half Body</option><option value="Knee Up">Knee Up</option><option value="Full Body">Full Body</option><option value="Emote or Sticker">Emote or Sticker</option><option value="Reference Sheet">Reference Sheet</option><option value="VRC Retexture">VRC Retexture</option><option value="Character Design">Character Design</option><option value="Animation Meme">Animation Meme</option><option value="Other">Other / custom request</option>
+                </select>
+              </label>
+              <label>Usage <b>required</b>
+                <select name="usageType" required>
+                  <option value="">Choose usage</option><option value="Personal">Personal use</option><option value="Profile or social media">Profile / social media</option><option value="Streaming or content creation">Streaming / content creation</option><option value="Commercial">Commercial use</option><option value="Not sure">Not sure yet</option>
+                </select>
+              </label>
+              <label>Budget range <b>required</b><input name="budget" type="text" maxlength="100" required placeholder="Example: $30–$50 USD"></label>
+              <label>Preferred deadline <span>optional</span><input name="deadline" type="date"></label>
+            </div>
+            <label class="full-field">Describe the request <b>required</b><textarea name="message" rows="8" maxlength="5000" required placeholder="Character, pose, expression, clothing, background, mood, number of subjects, and any other important details..."></textarea></label>
+            <label class="full-field">Reference links <span>optional</span><textarea name="referenceLinks" rows="4" maxlength="3000" placeholder="One viewable link per line: character sheets, image folders, mood boards, documents..."></textarea></label>
+          </fieldset>
 
-          <label class="commission-consent">
-            <input name="consent" type="checkbox" required>
-            <span>I understand this is a request, not an automatic booking, and Haden may accept, adjust, waitlist, or decline it.</span>
-          </label>
+          <fieldset class="form-stage">
+            <legend><span>03</span><strong>PAYMENT STATUS</strong><small>VERIFICATION FILE</small></legend>
+            <label class="full-field">Have you already sent payment? <b>required</b>
+              <select id="payment-claim" name="paymentClaim" required>
+                <option value="not_paid">No — I am waiting for approval and instructions</option>
+                <option value="already_paid">Yes — payment was already sent</option>
+              </select>
+            </label>
+            <div id="payment-details" class="payment-details" hidden>
+              <div class="payment-warning"><strong>Only enter this when payment was actually sent.</strong><span>This information helps match a transaction to the request. It does not guarantee acceptance.</span></div>
+              <div class="form-grid two-column">
+                <label>Payment method <b>required</b><input name="paymentMethod" type="text" maxlength="100" placeholder="Platform or method"></label>
+                <label>Payment reference <b>required</b><input name="paymentReference" type="text" maxlength="200" placeholder="Transaction ID, sender name, or receipt reference"></label>
+              </div>
+            </div>
+          </fieldset>
 
-          <button id="submit-commission" class="button full-button" type="submit">Send private request</button>
+          <fieldset class="form-stage agreement-stage">
+            <legend><span>04</span><strong>AUTHORIZE TRANSMISSION</strong><small>FINAL CHECK</small></legend>
+            <label class="check-field"><input name="termsAccepted" type="checkbox" required><span><strong>I have read the prices, boundaries, and terms.</strong> I understand that this request is not automatically accepted and that the final quote may change.</span></label>
+            <label class="check-field"><input name="consent" type="checkbox" required><span><strong>I consent to sending these details privately to the artist.</strong> I confirm the contact information is accurate.</span></label>
+          </fieldset>
+
+          <div class="transmit-row">
+            <div><span>END OF FILE</span><small>Check every required field before transmission.</small></div>
+            <button id="submit-commission" class="transmit-button magnetic" type="submit">Send private request</button>
+          </div>
           <p id="commission-form-status" class="form-status" role="status" aria-live="polite"></p>
         </form>
 
-        <section id="commission-success" class="commission-success" hidden aria-live="polite">
-          <span aria-hidden="true">✦</span>
-          <h2>Request delivered.</h2>
-          <p>Your private reference number is:</p>
-          <strong id="commission-reference"></strong>
-          <p>Save that number. Haden can use it to identify your request.</p>
-          <button id="new-commission-request" class="button button-ghost" type="button">Send another request</button>
+        <section id="commission-success" class="commission-success" hidden aria-labelledby="success-title">
+          <span class="success-signal" aria-hidden="true">✓</span>
+          <p class="eyebrow"><span>TRANSMISSION COMPLETE</span></p>
+          <h3 id="success-title">REQUEST RECEIVED</h3>
+          <p>Keep this reference code. It can be used when discussing your submission with the artist.</p>
+          <div class="reference-receipt"><span>REFERENCE CODE</span><strong id="commission-reference"></strong><small>HADENZ // PRIVATE COMMISSION CHANNEL</small></div>
+          <button id="new-commission-request" class="button button-primary magnetic" type="button"><span>START ANOTHER REQUEST</span><i>↻</i></button>
         </section>
       </div>
     </section>
-
-    <section class="commission-process" aria-labelledby="process-title">
-      <div class="commission-process-intro">
-        <p class="eyebrow">What happens next</p>
-        <h2 id="process-title">A request is not a charge.</h2>
-        <p>
-          Haden reviews the request privately, discusses the scope with you,
-          and confirms payment separately before changing the request to paid.
-        </p>
-      </div>
-
-      <ol class="process-list">
-        <li>
-          <span>01</span>
-          <div>
-            <h3>Request received</h3>
-            <p>Your message appears in Haden’s private website inbox with a reference number.</p>
-          </div>
-        </li>
-        <li>
-          <span>02</span>
-          <div>
-            <h3>Scope reviewed</h3>
-            <p>Haden may contact you for references, changes, timing, usage, or a final quote.</p>
-          </div>
-        </li>
-        <li>
-          <span>03</span>
-          <div>
-            <h3>Payment verified</h3>
-            <p>After checking the actual PayPal or Ko-fi transaction, Haden marks the inbox record as paid — verified.</p>
-          </div>
-        </li>
-        <li>
-          <span>04</span>
-          <div>
-            <h3>Work begins</h3>
-            <p>The request can then move through accepted, in progress, and completed statuses.</p>
-          </div>
-        </li>
-      </ol>
-    </section>
   </main>
 
-  <footer class="site-footer">
-    <p class="footer-signature">
-      <img class="footer-logo" src="assets/Hadenz_Logo.png" alt="" aria-hidden="true">
-      <span>© <span id="year"></span> HadenZOfficial. Commission requests are reviewed privately.</span>
-    </p>
-    <nav class="footer-links" aria-label="Footer navigation">
-      <a href="index.html">Home</a>
-      <a href="index.html#gallery">Gallery</a>
-      <a href="index.html?admin=commissions">Artist inbox</a>
-      <a href="#top">Top ↑</a>
-    </nav>
+  <footer class="site-footer commission-footer">
+    <div class="footer-brand"><img src="assets/Hadenz_Logo.png" alt=""><div><strong>HADENZ</strong><span>BEYOND THE FRAME</span></div></div>
+    <p>© <span id="year"></span> HadenZOfficial. Commission requests are private and reviewed manually.</p>
+    <div class="footer-links"><a href="index.html" data-transition="HOME">Gallery home</a><a href="#top">Return to top ↑</a></div>
   </footer>
 </body>
 </html>
