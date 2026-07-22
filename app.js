@@ -12,7 +12,11 @@
   });
 
   if (!window.supabase?.createClient) {
-    document.body.innerHTML = "<main class='fatal-error'><h1>Gallery unavailable</h1><p>The Supabase library did not load. Check your internet connection and refresh.</p></main>";
+    document.body.innerHTML = `
+      <main style="padding:2rem;font-family:system-ui;background:#110018;color:white;min-height:100vh">
+        <h1>Gallery unavailable</h1>
+        <p>The Supabase library did not load. Check your internet connection and refresh.</p>
+      </main>`;
     return;
   }
 
@@ -107,11 +111,13 @@
     : "gallery";
 
   function setStatus(element, message = "", type = "") {
+    if (!element) return;
     element.textContent = message;
     element.className = `form-status${type ? ` is-${type}` : ""}`;
   }
 
   function showToast(message, type = "success") {
+    if (!elements.toast) return;
     clearTimeout(toastTimer);
     elements.toast.textContent = message;
     elements.toast.className = `toast is-${type}`;
@@ -122,6 +128,7 @@
   }
 
   function setBusy(button, busy, busyText, normalText) {
+    if (!button) return;
     button.disabled = busy;
     button.textContent = busy ? busyText : normalText;
   }
@@ -131,7 +138,9 @@
   }
 
   function titleCase(value) {
-    return String(value || "Other").replace(/\b\w/g, char => char.toUpperCase());
+    return String(value || "Other")
+      .replaceAll("_", " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
   }
 
   function formatDate(dateString) {
@@ -163,7 +172,7 @@
       return;
     }
 
-    artworks = (data || []).map(item => ({
+    artworks = (data || []).map((item) => ({
       ...item,
       imageUrl: getPublicImageUrl(item.image_path)
     }));
@@ -174,11 +183,11 @@
   }
 
   function buildFilters() {
-    const categories = ["All", ...new Set(artworks.map(item => titleCase(item.category)))];
+    const categories = ["All", ...new Set(artworks.map((item) => titleCase(item.category)))];
     if (!categories.includes(activeFilter)) activeFilter = "All";
-    elements.filters.replaceChildren();
 
-    categories.forEach(category => {
+    elements.filters.replaceChildren();
+    categories.forEach((category) => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = `filter-button${category === activeFilter ? " is-active" : ""}`;
@@ -196,9 +205,9 @@
     activeFilter = category;
     filteredArtworks = category === "All"
       ? [...artworks]
-      : artworks.filter(item => titleCase(item.category) === category);
+      : artworks.filter((item) => titleCase(item.category) === category);
 
-    $$(".filter-button", elements.filters).forEach(button => {
+    $$(".filter-button", elements.filters).forEach((button) => {
       const active = button.dataset.filter === category;
       button.classList.toggle("is-active", active);
       button.setAttribute("aria-pressed", String(active));
@@ -261,11 +270,13 @@
   function updateLightbox() {
     const artwork = filteredArtworks[lightboxIndex];
     if (!artwork) return;
+
     elements.lightboxImage.src = artwork.imageUrl;
     elements.lightboxImage.alt = artwork.title;
     elements.lightboxTitle.textContent = artwork.title;
     elements.lightboxCategory.textContent = `${titleCase(artwork.category)} · ${formatDate(artwork.created_at)}`;
     elements.lightboxDescription.textContent = artwork.description || "";
+
     const multiple = filteredArtworks.length > 1;
     elements.lightboxPrev.hidden = !multiple;
     elements.lightboxNext.hidden = !multiple;
@@ -297,7 +308,7 @@
     elements.loginView.hidden = Boolean(isAdmin);
     elements.dashboardView.hidden = !isAdmin;
     elements.openAdmin.textContent = isAdmin ? "Artist dashboard" : "Artist login";
-    elements.heroUpload.textContent = isAdmin ? "Upload artwork" : "Artist login";
+    elements.heroUpload.querySelector("span").textContent = isAdmin ? "UPLOAD ARTWORK" : "ARTIST LOGIN";
 
     if (isAdmin) {
       elements.signedInEmail.textContent = user.email || "Authorized artist";
@@ -310,6 +321,7 @@
   async function openAdminDialog(panel = requestedDashboardPanel) {
     requestedDashboardPanel = panel === "commissions" ? "commissions" : "gallery";
     setStatus(elements.loginStatus);
+
     const session = await getCurrentSession();
     await updateAuthView(session);
     elements.adminDialog.showModal();
@@ -321,7 +333,6 @@
     const target = session?.user?.id === CONFIG.adminUserId
       ? (requestedDashboardPanel === "commissions" ? elements.commissionStatusFilter : elements.fileInput)
       : elements.loginEmail;
-
     setTimeout(() => target?.focus(), 0);
   }
 
@@ -364,6 +375,7 @@
     resetPreview();
     const file = elements.fileInput.files?.[0];
     if (!file || !file.type.startsWith("image/")) return;
+
     previewObjectUrl = URL.createObjectURL(file);
     elements.uploadPreview.src = previewObjectUrl;
     elements.uploadPreview.hidden = false;
@@ -372,7 +384,8 @@
 
   function safeFileName(name) {
     const extension = name.includes(".") ? `.${name.split(".").pop().toLowerCase()}` : "";
-    const base = name.replace(/\.[^/.]+$/, "")
+    const base = name
+      .replace(/\.[^/.]+$/, "")
       .normalize("NFKD")
       .replace(/[^a-zA-Z0-9_-]+/g, "-")
       .replace(/^-+|-+$/g, "")
@@ -513,11 +526,7 @@
     if (!confirmed) return;
 
     setBusy(button, true, "Deleting…", "Delete");
-
-    const { error: dbError } = await db
-      .from(CONFIG.table)
-      .delete()
-      .eq("id", artwork.id);
+    const { error: dbError } = await db.from(CONFIG.table).delete().eq("id", artwork.id);
 
     if (dbError) {
       setBusy(button, false, "Deleting…", "Delete");
@@ -571,7 +580,6 @@
     await loadGallery();
   }
 
-
   const REQUEST_STATUS_LABELS = Object.freeze({
     new: "New",
     reviewing: "Reviewing",
@@ -602,9 +610,7 @@
     elements.galleryDashboardPanel.hidden = commissionsActive;
     elements.commissionDashboardPanel.hidden = !commissionsActive;
 
-    if (commissionsActive) {
-      renderCommissionInbox();
-    }
+    if (commissionsActive) renderCommissionInbox();
   }
 
   function formatCommissionDate(dateString) {
@@ -665,7 +671,7 @@
     }
 
     commissionRequests = data || [];
-    const newCount = commissionRequests.filter(request => request.request_status === "new").length;
+    const newCount = commissionRequests.filter((request) => request.request_status === "new").length;
     elements.commissionNewCount.textContent = String(newCount);
     elements.commissionNewCount.hidden = newCount === 0;
     renderCommissionInbox();
@@ -693,12 +699,11 @@
     reference.textContent = request.reference_code;
 
     const title = document.createElement("h4");
-    title.textContent = `${request.name} — ${titleCase(request.commission_type.replaceAll("_", " "))}`;
+    title.textContent = `${request.name} — ${titleCase(String(request.commission_type || "Other"))}`;
 
     const created = document.createElement("p");
     created.className = "commission-received-date";
     created.textContent = `Received ${formatCommissionDate(request.created_at)}`;
-
     identity.append(reference, title, created);
 
     const badges = document.createElement("div");
@@ -711,7 +716,6 @@
     const paymentBadge = document.createElement("span");
     paymentBadge.className = `commission-status-badge payment-badge ${paymentBadgeClass(request.payment_status)}`;
     paymentBadge.textContent = PAYMENT_STATUS_LABELS[request.payment_status] || request.payment_status;
-
     badges.append(requestBadge, paymentBadge);
     header.append(identity, badges);
 
@@ -726,12 +730,10 @@
     contactHandle.textContent = request.contact_handle
       ? `${titleCase(request.contact_method)}: ${request.contact_handle}`
       : `Preferred contact: ${titleCase(request.contact_method)}`;
-
     contact.append(emailLink, contactHandle);
 
     const summary = document.createElement("dl");
     summary.className = "commission-summary-grid";
-
     const summaryEntries = [
       ["Usage", titleCase(request.usage_type)],
       ["Budget", request.budget || "Not provided"],
@@ -753,8 +755,10 @@
 
     const messageBlock = document.createElement("div");
     messageBlock.className = "commission-message-block";
+
     const messageHeading = document.createElement("strong");
     messageHeading.textContent = "Request message";
+
     const message = document.createElement("p");
     message.textContent = request.message;
     messageBlock.append(messageHeading, message);
@@ -840,9 +844,7 @@
     deleteRequest.type = "button";
     deleteRequest.className = "small-button commission-delete-button";
     deleteRequest.textContent = "Delete request";
-    deleteRequest.addEventListener("click", () => {
-      deleteCommissionRequest(request, deleteRequest);
-    });
+    deleteRequest.addEventListener("click", () => deleteCommissionRequest(request, deleteRequest));
 
     actions.append(save, email, archive, deleteRequest);
     article.append(header, contact, summary, messageBlock, controls, actions);
@@ -851,16 +853,14 @@
 
   function renderCommissionInbox() {
     if (!elements.commissionInboxList) return;
-
     const filter = elements.commissionStatusFilter.value;
     const visible = filter === "all"
       ? commissionRequests
-      : commissionRequests.filter(request => request.request_status === filter);
+      : commissionRequests.filter((request) => request.request_status === filter);
 
     elements.commissionInboxList.replaceChildren(...visible.map(makeCommissionRequestCard));
     elements.commissionInboxEmpty.hidden = visible.length !== 0;
   }
-
 
   async function deleteCommissionRequest(request, button) {
     const session = await getCurrentSession();
@@ -872,17 +872,11 @@
     const confirmed = window.confirm(
       `Permanently delete commission request ${request.reference_code} from ${request.name}?\n\nThis cannot be undone.`
     );
-
     if (!confirmed) return;
 
     const originalButtonText = button.textContent;
     setBusy(button, true, "Deleting…", originalButtonText);
-
-    const { error } = await db
-      .from(CONFIG.commissionTable)
-      .delete()
-      .eq("id", request.id);
-
+    const { error } = await db.from(CONFIG.commissionTable).delete().eq("id", request.id);
     setBusy(button, false, "Deleting…", originalButtonText);
 
     if (error) {
@@ -908,7 +902,6 @@
     const originalButtonText = button.textContent;
 
     setBusy(button, true, "Saving…", originalButtonText);
-
     const { error } = await db
       .from(CONFIG.commissionTable)
       .update({
@@ -918,7 +911,6 @@
         artist_notes: artistNotes
       })
       .eq("id", id);
-
     setBusy(button, false, "Saving…", originalButtonText);
 
     if (error) {
@@ -942,36 +934,36 @@
     elements.nav.classList.toggle("is-open", !open);
   });
 
-  elements.nav.addEventListener("click", event => {
-    if (event.target.matches("a")) {
+  elements.nav.addEventListener("click", (event) => {
+    if (event.target.closest("a")) {
       elements.menuButton.setAttribute("aria-expanded", "false");
       elements.nav.classList.remove("is-open");
     }
   });
 
-  elements.openAdmin.addEventListener("click", openAdminDialog);
-  elements.heroUpload.addEventListener("click", openAdminDialog);
+  elements.openAdmin.addEventListener("click", () => openAdminDialog());
+  elements.heroUpload.addEventListener("click", () => openAdminDialog());
   elements.closeAdmin.addEventListener("click", () => elements.adminDialog.close());
-  elements.adminDialog.addEventListener("click", event => closeDialogOnBackdrop(elements.adminDialog, event));
+  elements.adminDialog.addEventListener("click", (event) => closeDialogOnBackdrop(elements.adminDialog, event));
   elements.loginForm.addEventListener("submit", handleLogin);
   elements.uploadForm.addEventListener("submit", handleUpload);
   elements.fileInput.addEventListener("change", previewSelectedFile);
 
-  ["dragenter", "dragover"].forEach(type => {
-    elements.fileDropZone.addEventListener(type, event => {
+  ["dragenter", "dragover"].forEach((type) => {
+    elements.fileDropZone.addEventListener(type, (event) => {
       event.preventDefault();
       elements.fileDropZone.classList.add("is-dragging");
     });
   });
 
-  ["dragleave", "drop"].forEach(type => {
-    elements.fileDropZone.addEventListener(type, event => {
+  ["dragleave", "drop"].forEach((type) => {
+    elements.fileDropZone.addEventListener(type, (event) => {
       event.preventDefault();
       elements.fileDropZone.classList.remove("is-dragging");
     });
   });
 
-  elements.fileDropZone.addEventListener("drop", event => {
+  elements.fileDropZone.addEventListener("drop", (event) => {
     const file = event.dataTransfer?.files?.[0];
     if (!file) return;
     const transfer = new DataTransfer();
@@ -989,17 +981,16 @@
   elements.lightboxClose.addEventListener("click", () => elements.lightbox.close());
   elements.lightboxPrev.addEventListener("click", () => moveLightbox(-1));
   elements.lightboxNext.addEventListener("click", () => moveLightbox(1));
-  elements.lightbox.addEventListener("click", event => closeDialogOnBackdrop(elements.lightbox, event));
-  elements.lightbox.addEventListener("keydown", event => {
+  elements.lightbox.addEventListener("click", (event) => closeDialogOnBackdrop(elements.lightbox, event));
+  elements.lightbox.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft") moveLightbox(-1);
     if (event.key === "ArrowRight") moveLightbox(1);
   });
 
   elements.closeEdit.addEventListener("click", () => elements.editDialog.close());
-  elements.editDialog.addEventListener("click", event => closeDialogOnBackdrop(elements.editDialog, event));
+  elements.editDialog.addEventListener("click", (event) => closeDialogOnBackdrop(elements.editDialog, event));
   elements.editForm.addEventListener("submit", handleEdit);
   elements.retry.addEventListener("click", loadGallery);
-
 
   elements.galleryDashboardTab.addEventListener("click", () => {
     requestedDashboardPanel = "gallery";
@@ -1024,7 +1015,7 @@
         openAdminDialog("commissions");
       }
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
       showToast("Something went wrong while starting the gallery.", "error");
     });

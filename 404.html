@@ -3,17 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lost Dog // 404</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="robots" content="noindex">
+  <title>Redirecting // HadenZ</title>
+  <script>
+    (() => {
+      const path = window.location.pathname.replace(/\/+$/, "").toLowerCase();
+      const routes = {
+        "": "/home/",
+        "/index.html": "/home/",
+        "/home": "/home/",
+        "/commissions.html": "/comissions/",
+        "/commissions": "/comissions/",
+        "/comissions": "/comissions/"
+      };
+      const destination = routes[path];
+      if (destination) {
+        window.location.replace(destination + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
 </head>
 <body>
-  <main style="min-height:100vh;display:grid;place-items:center;padding:1rem;text-align:center">
-    <div>
-      <p class="kicker"><span>404</span> Trail lost</p>
-      <h1 style="font-size:clamp(5rem,18vw,12rem);margin:.5rem 0;line-height:.8">WRONG<br>YARD.</h1>
-      <p>This page wandered off.</p>
-      <a class="button button-primary" href="./">Return to the den</a>
-    </div>
-  </main>
+  <h1>That archive page was not found.</h1>
+  <p><a href="/home/">Return to HadenZ</a></p>
 </body>
 </html>

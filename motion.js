@@ -93,9 +93,28 @@
 
   function initializeCursor() {
     if (!finePointer || reducedMotion) return;
-    const ring = q(".cursor");
-    const dot = q(".cursor-dot");
-    if (!ring || !dot) return;
+
+    // Modal dialogs render in the browser's top layer. A cursor that remains
+    // under <body> cannot appear above them, regardless of its z-index, so
+    // every dialog gets its own synchronized cursor pair.
+    qa("dialog").forEach((dialog) => {
+      if (q(":scope > .dialog-cursor", dialog)) return;
+
+      const ring = document.createElement("div");
+      ring.className = "cursor dialog-cursor";
+      ring.setAttribute("aria-hidden", "true");
+      ring.innerHTML = "<span></span>";
+
+      const dot = document.createElement("div");
+      dot.className = "cursor-dot dialog-cursor-dot";
+      dot.setAttribute("aria-hidden", "true");
+
+      dialog.append(ring, dot);
+    });
+
+    const rings = qa(".cursor");
+    const dots = qa(".cursor-dot");
+    if (!rings.length || !dots.length) return;
 
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
@@ -105,7 +124,8 @@
     window.addEventListener("mousemove", (event) => {
       mouseX = event.clientX;
       mouseY = event.clientY;
-      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+      const dotTransform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+      dots.forEach((dot) => { dot.style.transform = dotTransform; });
       document.documentElement.style.setProperty("--mx", `${(mouseX / window.innerWidth) * 100}%`);
       document.documentElement.style.setProperty("--my", `${(mouseY / window.innerHeight) * 100}%`);
     }, { passive: true });
@@ -113,7 +133,8 @@
     const render = () => {
       ringX += (mouseX - ringX) * 0.16;
       ringY += (mouseY - ringY) * 0.16;
-      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      const ringTransform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      rings.forEach((ring) => { ring.style.transform = ringTransform; });
       requestAnimationFrame(render);
     };
     render();

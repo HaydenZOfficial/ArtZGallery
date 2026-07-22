@@ -9,7 +9,11 @@
   });
 
   if (!window.supabase?.createClient) {
-    document.body.innerHTML = "<main class='fatal-error'><h1>Commission form unavailable</h1><p>The Supabase library did not load. Refresh and try again.</p></main>";
+    document.body.innerHTML = `
+      <main style="padding:2rem;font-family:system-ui;background:#110018;color:white;min-height:100vh">
+        <h1>Commission form unavailable</h1>
+        <p>The Supabase library did not load. Refresh and try again.</p>
+      </main>`;
     return;
   }
 
@@ -21,8 +25,7 @@
     }
   });
 
-  const $ = selector => document.querySelector(selector);
-
+  const $ = (selector) => document.querySelector(selector);
   const elements = {
     year: $("#year"),
     menuButton: $(".menu-button"),
@@ -64,7 +67,6 @@
 
   function collectPayload() {
     const data = new FormData(elements.form);
-
     return {
       name: String(data.get("name") || "").trim(),
       email: String(data.get("email") || "").trim(),
@@ -87,28 +89,23 @@
   async function submitRequest(event) {
     event.preventDefault();
     setStatus();
-
     if (!elements.form.reportValidity()) return;
 
     const lastSent = Number(localStorage.getItem("hadenzCommissionLastSent") || 0);
     const waitMs = CONFIG.localCooldownMs - (Date.now() - lastSent);
-
     if (waitMs > 0) {
       setStatus(`Please wait ${Math.ceil(waitMs / 1000)} seconds before sending another request.`, "error");
       return;
     }
 
     setBusy(true);
-
     const { data, error } = await db.functions.invoke(CONFIG.functionName, {
       body: collectPayload()
     });
-
     setBusy(false);
 
     if (error) {
       let message = error.message || "The request could not be delivered.";
-
       try {
         const context = error.context;
         if (context instanceof Response) {
@@ -116,9 +113,8 @@
           if (body?.error) message = body.error;
         }
       } catch {
-        // Use the original message.
+        // Use the original error message.
       }
-
       setStatus(message, "error");
       return;
     }
@@ -160,7 +156,7 @@
     elements.nav.classList.toggle("is-open", !open);
   });
 
-  elements.nav.addEventListener("click", event => {
+  elements.nav.addEventListener("click", (event) => {
     if (event.target.closest("a")) {
       elements.menuButton.setAttribute("aria-expanded", "false");
       elements.nav.classList.remove("is-open");
