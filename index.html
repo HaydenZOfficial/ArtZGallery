@@ -3,358 +3,347 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="HadenZOfficial’s independent art gallery, commission hub, and creative links.">
-  <meta name="theme-color" content="#240037">
-  <title>HadenZOfficial’s Gallery</title>
-  <link rel="icon" href="assets/Hadenz_Logo.png" type="image/png">
-  <link rel="apple-touch-icon" href="assets/Hadenz_Logo.png">
-  <link rel="stylesheet" href="styles.css?v=commission-delete-buttons-1">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="app.js?v=commission-delete-buttons-1" defer></script>
+  <meta name="description" content="Limonene's punk web-design portfolio, projects, and social links.">
+  <meta name="theme-color" content="#0a090b">
+  <meta property="og:title" content="Limonene — Web Mutt Portfolio">
+  <meta property="og:description" content="Websites, experiments, and strange little corners of the internet.">
+  <meta property="og:image" content="assets/limonene-logo.png">
+  <title>Limonene // Web Mutt</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/limonene-logo.png">
+  <link rel="stylesheet" href="styles.css?v=1">
+  <script src="script.js?v=1" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#gallery">Skip to gallery</a>
+  <a class="skip-link" href="#work">Skip to portfolio</a>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="top-ticker" aria-hidden="true">
+    <div>
+      WEB DESIGN ✦ BERNER ENERGY ✦ HAND-CODED CHAOS ✦ NO BORING TEMPLATES ✦
+      WEB DESIGN ✦ BERNER ENERGY ✦ HAND-CODED CHAOS ✦ NO BORING TEMPLATES ✦
+    </div>
+  </div>
 
   <header class="site-header" id="top">
-    <a class="brand" href="#top" aria-label="HadenZOfficial gallery home">
-      <img class="brand-logo" src="assets/Hadenz_Logo.png" alt="" aria-hidden="true">
-      <span>HadenZ Gallery</span>
+    <a class="brand" href="#top" aria-label="Limonene portfolio home">
+      <span class="brand-mark" aria-hidden="true">L//</span>
+      <span>WEB MUTT</span>
     </a>
 
-    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="primary-nav">
       <span class="sr-only">Open navigation</span>
-      <span></span><span></span>
+      <span></span>
+      <span></span>
     </button>
 
-    <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
-      <a href="#gallery">Gallery</a>
+    <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation">
+      <a href="#work">Work</a>
       <a href="#about">About</a>
-      <a href="commissions.html">Commissions</a>
-      <a href="#links">Links</a>
-      <button id="open-admin" class="nav-admin" type="button">Artist login</button>
+      <a href="#socials">Socials</a>
+      <a class="nav-contact" href="mailto:">Contact</a>
     </nav>
   </header>
 
   <main>
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">Independent art showcase</p>
-        <h1 id="hero-title">Welcome to my Website!</h1>
-        <p class="hero-text">This is where I host all of my; Original illustrations, character work, environments, sketches, and visual experiments.</p>
+        <p class="kicker"><span>01</span> Independent web designer</p>
+        <h1 id="hero-title">
+          <span class="hero-name">LIMONENE</span>
+          <span class="hero-outline">BUILDS WEIRD</span>
+          <span class="hero-name hero-name-last">WEBSITES.</span>
+        </h1>
+
+        <p class="hero-text">
+          I make loud, personal websites for artists, friends, and anyone who
+          wants a corner of the internet that actually feels like <em>theirs</em>.
+        </p>
+
         <div class="hero-actions">
-          <a class="button" href="#gallery">View the gallery</a>
-          <a class="button button-ghost" href="commissions.html">Commission info</a>
-          <a class="button button-ghost" href="https://ko-fi.com/hadenz/tiers" target="_blank" rel="noopener noreferrer">Support my art</a>
-          <button id="hero-upload" class="button button-ghost artist-only-action" type="button">Upload artwork</button>
+          <a class="button button-primary" href="#work">See the builds</a>
+          <a class="button button-ghost" href="#socials">Find me online</a>
+        </div>
+
+        <div class="hero-labels" aria-label="Creative specialties">
+          <span>HTML</span>
+          <span>CSS</span>
+          <span>JAVASCRIPT</span>
+          <span>SUPABASE</span>
+          <span>GITHUB PAGES</span>
         </div>
       </div>
 
-      <div class="hero-art hero-mascot">
-        <div class="hero-mascot-panel">
-          <span class="mascot-sticker mascot-sticker-top" aria-hidden="true">★ FEATURED CREATURE ★</span>
-          <span class="mascot-spark mascot-spark-one" aria-hidden="true">✦</span>
-          <span class="mascot-spark mascot-spark-two" aria-hidden="true">✧</span>
-          <img
-            class="hero-mascot-gif"
-            src="assets/ZenTailWag_YCH.gif"
-            alt="Animated brown canine character wagging its tail"
-          >
-          <span class="mascot-caption" aria-hidden="true">WELCOME TO MY WORLD</span>
+      <div class="hero-art">
+        <div class="tape tape-one" aria-hidden="true">BERNESE APPROVED</div>
+        <div class="logo-frame">
+          <img src="assets/limonene-logo.png" alt="Illustrated Bernese mountain dog character with brown and black hair against a purple background">
+          <span class="logo-stamp" aria-hidden="true">GOOD DOG<br>BAD CODE</span>
+        </div>
+        <div class="hero-badge" aria-hidden="true">
+          <span>EST.</span>
+          <strong>2026</strong>
+          <span>ONLINE</span>
         </div>
       </div>
+
+      <a class="scroll-tag" href="#work">SCROLL / BARK / REPEAT ↓</a>
     </section>
 
-    <section id="gallery" class="gallery-section" aria-labelledby="gallery-title">
+    <section class="manifesto" aria-label="Design manifesto">
+      <p>
+        <span>NO</span> sterile portfolios.
+        <span>NO</span> personality-free grids.
+        <span>YES</span> to sites with teeth.
+      </p>
+    </section>
+
+    <section id="work" class="work-section" aria-labelledby="work-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Selected works</p>
-          <h2 id="gallery-title">Gallery</h2>
+          <p class="kicker"><span>02</span> Selected builds</p>
+          <h2 id="work-title">FRIENDS’ SITES,<br>BUILT WITH BITE.</h2>
         </div>
-        <p class="gallery-count" aria-live="polite"><span id="visible-count">0</span> works</p>
+        <p class="section-note">
+          Two custom art-gallery sites made around the artists instead of forcing
+          the artists into a generic template.
+        </p>
       </div>
 
-      <div id="filters" class="filters" role="group" aria-label="Filter artwork by category"></div>
+      <div class="project-grid">
+        <article class="project-card project-hadenz">
+          <div class="project-number">PROJECT 001</div>
+          <div class="project-preview" aria-hidden="true">
+            <div class="mock-browser">
+              <div class="mock-browser-bar"><i></i><i></i><i></i></div>
+              <div class="mock-hadenz">
+                <span>HADENZ</span>
+                <strong>ART<br>GALLERY</strong>
+                <div class="mock-gallery">
+                  <i></i><i></i><i></i>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      <div id="gallery-loading" class="state-card" role="status">Loading artwork…</div>
-      <div id="gallery-grid" class="gallery-grid" hidden></div>
-      <div id="empty-state" class="state-card empty-state" hidden>
-        <span class="empty-icon" aria-hidden="true">✦</span>
-        <h3>No artwork has been uploaded yet.</h3>
-        <p>Use the artist login to publish the first piece.</p>
-      </div>
-      <div id="gallery-error" class="state-card error-state" hidden>
-        <h3>The gallery could not load.</h3>
-        <p id="gallery-error-text"></p>
-        <button id="retry-gallery" class="button" type="button">Try again</button>
+          <div class="project-copy">
+            <p class="project-type">Artist gallery / Commission portal</p>
+            <h3>HadenZ Gallery</h3>
+            <p>
+              A purple-and-gold independent art gallery with a Supabase-powered
+              upload dashboard, private commission inbox, payment-status tools,
+              pricing, policies, and a custom artist-first identity.
+            </p>
+
+            <ul class="tag-list" aria-label="HadenZ project features">
+              <li>Supabase</li>
+              <li>Private dashboard</li>
+              <li>Commission inbox</li>
+              <li>Responsive</li>
+            </ul>
+
+            <a class="project-link" href="https://haydenzofficial.github.io/ArtZGallery/" target="_blank" rel="noopener noreferrer">
+              Visit live site <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="project-card project-foxineory">
+          <div class="project-number">PROJECT 002</div>
+          <div class="project-preview" aria-hidden="true">
+            <div class="mock-browser">
+              <div class="mock-browser-bar"><i></i><i></i><i></i></div>
+              <div class="mock-fox">
+                <span>FOXINEORY</span>
+                <strong>SPOOKY<br>SHOWCASE</strong>
+                <div class="mock-moons">
+                  <i>☾</i><i>✦</i><i>★</i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-copy">
+            <p class="project-type">Halloween art gallery / Artist uploader</p>
+            <h3>Foxineory Gallery</h3>
+            <p>
+              A spooky-cute Halloween portfolio with a masonry gallery, featured
+              artwork, lightbox viewing, artist authentication, and direct
+              uploads without touching repository code.
+            </p>
+
+            <ul class="tag-list" aria-label="Foxineory project features">
+              <li>Halloween UI</li>
+              <li>Art uploads</li>
+              <li>Lightbox</li>
+              <li>Mobile-first</li>
+            </ul>
+
+            <a class="project-link" href="https://fonixeory.github.io/Fonix-sGallery/" target="_blank" rel="noopener noreferrer">
+              Visit live site <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </article>
       </div>
     </section>
 
     <section id="about" class="about-section" aria-labelledby="about-title">
-      <div>
-        <p class="eyebrow">About the artist</p>
-        <h2 id="about-title">Just going with the flow of life</h2>
+      <div class="about-title-wrap">
+        <p class="kicker"><span>03</span> Who let the dog code?</p>
+        <h2 id="about-title">A LITTLE<br>ABOUT THE MUTT.</h2>
       </div>
+
       <div class="about-copy">
-        <p>The universe itself inpisred me to do so much with my world. I create stories with friends expanding form Sci-Fi to Horror. I simply wish for people to get inspired by my stuff the way I was inspired by others.</p>
-        <p>Take a look around my gallery, if you're interested in getting something from me, contact me! I don't bite... not that hard.</p>
+        <p class="about-lede">
+          I’m Limonene. I build websites that feel handmade, expressive, and a
+          little unruly.
+        </p>
+        <p>
+          My favorite projects start with somebody’s art, colors, characters,
+          community, and personality—then turn all of that into a space they can
+          actually own. I care about readable layouts, mobile support, and giving
+          artists control over their own work.
+        </p>
+        <p>
+          This portfolio is also an experiment: part résumé, part digital den,
+          part proof that the web can still be strange.
+        </p>
+
+        <blockquote>
+          “MAKE THE INTERNET PERSONAL AGAIN.”
+        </blockquote>
+      </div>
+
+      <div class="berner-patches" aria-hidden="true">
+        <span class="patch patch-black">LOYAL</span>
+        <span class="patch patch-rust">LOUD</span>
+        <span class="patch patch-cream">CURIOUS</span>
       </div>
     </section>
 
-    <section id="contact" class="contact-section" aria-labelledby="contact-title">
-      <div class="link-marquee" aria-hidden="true">COMMISSIONS ✦ SUPPORT ✦ COMMUNITY ✦ COMMISSIONS ✦ SUPPORT ✦ COMMUNITY ✦</div>
-      <div class="contact-heading">
-        <p class="eyebrow">Work with me</p>
-        <h2 id="contact-title">Commissions, support, and community.</h2>
-        <p>Check commission availability, support future artwork, leave a tip, or join the community space.</p>
-      </div>
-
-      <div class="featured-link-grid">
-        <a class="featured-link platform-trello" href="commissions.html">
-          <span class="link-icon" aria-hidden="true">✦</span>
-          <span class="link-copy"><span class="link-kicker">Private request portal</span><strong>Commission HadenZ</strong><span>Send a request directly to my private artist inbox and receive a reference number.</span></span>
-          <span class="link-arrow" aria-hidden="true">→</span>
-        </a>
-        <a class="featured-link platform-kofi" href="https://ko-fi.com/hadenz/tiers" target="_blank" rel="noopener noreferrer">
-          <span class="link-icon" aria-hidden="true">♥</span>
-          <span class="link-copy"><span class="link-kicker">Memberships</span><strong>Ko-fi Tiers</strong><span>Support my work and see available membership tiers.</span></span>
-          <span class="link-arrow" aria-hidden="true">↗</span>
-        </a>
-        <a class="featured-link platform-paypal" href="https://www.paypal.com/paypalme/germanbrok" target="_blank" rel="noopener noreferrer">
-          <span class="link-icon" aria-hidden="true">$</span>
-          <span class="link-copy"><span class="link-kicker">Tip jar</span><strong>PayPal</strong><span>Send direct support through my PayPal.me page.</span></span>
-          <span class="link-arrow" aria-hidden="true">↗</span>
-        </a>
-        <a class="featured-link platform-discord" href="https://discord.gg/RcxATSkduw" target="_blank" rel="noopener noreferrer">
-          <span class="link-icon" aria-hidden="true">☄</span>
-          <span class="link-copy"><span class="link-kicker">Community</span><strong>Join the Discord</strong><span>Hang out, follow updates, and connect with the community.</span></span>
-          <span class="link-arrow" aria-hidden="true">↗</span>
-        </a>
-      </div>
-    </section>
-
-    <section id="links" class="links-section" aria-labelledby="links-title">
-      <div class="section-heading links-heading">
+    <section class="process-section" aria-labelledby="process-title">
+      <div class="section-heading">
         <div>
-          <p class="eyebrow">Elsewhere online</p>
-          <h2 id="links-title">Find HadenZ across the web.</h2>
+          <p class="kicker"><span>04</span> Build philosophy</p>
+          <h2 id="process-title">HOW I MAKE<br>THE THING.</h2>
         </div>
-        <p class="links-stamp" aria-hidden="true">WEB PORTAL<br>EST. 2026</p>
       </div>
 
-      <div class="social-link-grid">
-        <a class="social-link platform-youtube" href="https://www.youtube.com/@hadenzstudios" target="_blank" rel="noopener noreferrer"><span class="social-icon" aria-hidden="true">▶</span><span><strong>YouTube</strong><small>@hadenzstudios</small></span><span aria-hidden="true">↗</span></a>
-        <a class="social-link platform-twitch" href="https://www.twitch.tv/hadenz_studio" target="_blank" rel="noopener noreferrer"><span class="social-icon" aria-hidden="true">◩</span><span><strong>Twitch</strong><small>hadenz_studio</small></span><span aria-hidden="true">↗</span></a>
-        <a class="social-link platform-tiktok" href="https://www.tiktok.com/@hadenz.official" target="_blank" rel="noopener noreferrer"><span class="social-icon" aria-hidden="true">♪</span><span><strong>TikTok</strong><small>@hadenz.official</small></span><span aria-hidden="true">↗</span></a>
-        <a class="social-link platform-instagram" href="https://www.instagram.com/hadenz.official/" target="_blank" rel="noopener noreferrer"><span class="social-icon" aria-hidden="true">◎</span><span><strong>Instagram</strong><small>@hadenz.official</small></span><span aria-hidden="true">↗</span></a>
-        <a class="social-link platform-x" href="https://x.com/german_brok" target="_blank" rel="noopener noreferrer"><span class="social-icon" aria-hidden="true">𝕏</span><span><strong>X / Twitter</strong><small>@german_brok</small></span><span aria-hidden="true">↗</span></a>
-        <a class="social-link platform-gamejolt" href="https://gamejolt.com/@Haden-z" target="_blank" rel="noopener noreferrer"><span class="social-icon" aria-hidden="true">⚡</span><span><strong>Game Jolt</strong><small>@Haden-z</small></span><span aria-hidden="true">↗</span></a>
+      <ol class="process-grid">
+        <li>
+          <span>01</span>
+          <h3>Listen</h3>
+          <p>Find the voice, references, weird ideas, colors, and actual purpose.</p>
+        </li>
+        <li>
+          <span>02</span>
+          <h3>Shape</h3>
+          <p>Turn personality into layout, typography, motion, and visual systems.</p>
+        </li>
+        <li>
+          <span>03</span>
+          <h3>Build</h3>
+          <p>Hand-code the pages, connect tools, and make the site work on phones.</p>
+        </li>
+        <li>
+          <span>04</span>
+          <h3>Release</h3>
+          <p>Deploy it, test the strange corners, and hand the owner the keys.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="socials" class="socials-section" aria-labelledby="socials-title">
+      <div class="socials-intro">
+        <p class="kicker"><span>05</span> Signals from the den</p>
+        <h2 id="socials-title">FOLLOW THE<br>NOISE.</h2>
+        <p>Music, streams, posts, videos, and whatever I’m making next.</p>
       </div>
+
+      <div class="social-grid">
+        <a class="social-card spotify" href="https://open.spotify.com/user/corgilove9333" target="_blank" rel="noopener noreferrer">
+          <span class="social-index">A</span>
+          <div>
+            <small>Listening history</small>
+            <strong>Spotify</strong>
+            <p>@corgilove9333</p>
+          </div>
+          <span class="social-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a class="social-card twitch" href="https://www.twitch.tv/limonenettv" target="_blank" rel="noopener noreferrer">
+          <span class="social-index">B</span>
+          <div>
+            <small>Live transmissions</small>
+            <strong>Twitch</strong>
+            <p>@LimoneneTTV</p>
+          </div>
+          <span class="social-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a class="social-card twitter" href="https://x.com/LimoneneTTV" target="_blank" rel="noopener noreferrer">
+          <span class="social-index">C</span>
+          <div>
+            <small>Short-form barking</small>
+            <strong>X / Twitter</strong>
+            <p>@LimoneneTTV</p>
+          </div>
+          <span class="social-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a class="social-card youtube" href="https://www.youtube.com/channel/UC005HMx9aQnPZrC28GutySQ" target="_blank" rel="noopener noreferrer">
+          <span class="social-index">D</span>
+          <div>
+            <small>Video archive</small>
+            <strong>YouTube</strong>
+            <p>Limonene</p>
+          </div>
+          <span class="social-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="final-callout" aria-label="Portfolio closing statement">
+      <p>GOT A WEIRD WEBSITE IDEA?</p>
+      <strong>GOOD.</strong>
+      <span>Those are the fun ones.</span>
+      <a href="#top">Back to the top ↑</a>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p class="footer-signature">
-      <img class="footer-logo" src="assets/Hadenz_Logo.png" alt="" aria-hidden="true">
-      <span>© <span id="year"></span> HadenZOfficial. All artwork rights reserved.</span>
-    </p>
-    <nav class="footer-links" aria-label="Social links">
-      <a href="commissions.html">Commissions</a>
-      <a href="https://www.youtube.com/@hadenzstudios" target="_blank" rel="noopener noreferrer">YouTube</a>
-      <a href="https://www.instagram.com/hadenz.official/" target="_blank" rel="noopener noreferrer">Instagram</a>
-      <a href="https://discord.gg/RcxATSkduw" target="_blank" rel="noopener noreferrer">Discord</a>
-      <a href="#top">Top ↑</a>
-    </nav>
+    <div>
+      <strong>LIMONENE // WEB MUTT</strong>
+      <p>Built by hand. Shed on frequently.</p>
+    </div>
+
+    <p class="copyright">© <span id="year"></span> Limonene.</p>
+
+    <button id="secret-trigger" class="secret-trigger" type="button" aria-label="A suspicious hidden paw-print button">
+      <span aria-hidden="true">🐾</span>
+    </button>
   </footer>
 
-  <dialog id="lightbox" class="lightbox" aria-labelledby="lightbox-title">
-    <button class="lightbox-close" type="button" aria-label="Close artwork viewer">×</button>
-    <button class="lightbox-nav lightbox-prev" type="button" aria-label="Previous artwork">←</button>
-    <figure>
-      <div class="lightbox-image-wrap">
-        <img id="lightbox-image" src="" alt="">
-      </div>
-      <figcaption>
-        <div>
-          <p id="lightbox-category" class="lightbox-category"></p>
-          <h2 id="lightbox-title"></h2>
-        </div>
-        <p id="lightbox-description"></p>
-      </figcaption>
-    </figure>
-    <button class="lightbox-nav lightbox-next" type="button" aria-label="Next artwork">→</button>
-  </dialog>
+  <div id="easter-egg" class="easter-egg" aria-hidden="true">
+    <div class="egg-static" aria-hidden="true"></div>
 
-  <dialog id="admin-dialog" class="admin-dialog" aria-labelledby="admin-title">
-    <div class="dialog-header">
-      <div>
-        <p class="eyebrow">Private controls</p>
-        <h2 id="admin-title">Artist dashboard</h2>
-      </div>
-      <button id="close-admin" class="icon-button" type="button" aria-label="Close artist dashboard">×</button>
+    <button id="close-egg" class="close-egg" type="button" aria-label="Close secret easter egg">×</button>
+
+    <div class="cat-reveal">
+      <p>YOU FOUND THE BAD BUTTON</p>
+      <img src="assets/pointing-cat.png" alt="A blurry cat pointing directly at the viewer">
     </div>
 
-    <section id="login-view" class="auth-panel">
-      <div class="panel-intro">
-        <h3>Sign in to upload art</h3>
-        <p>Use the email and password you created in Supabase.</p>
-      </div>
-      <form id="login-form" class="stack-form">
-        <label>
-          Email
-          <input id="login-email" name="email" type="email" autocomplete="username" required>
-        </label>
-        <label>
-          Password
-          <input id="login-password" name="password" type="password" autocomplete="current-password" required>
-        </label>
-        <button id="login-button" class="button full-button" type="submit">Sign in</button>
-        <p id="login-status" class="form-status" role="status"></p>
-      </form>
-    </section>
-
-    <section id="dashboard-view" class="dashboard" hidden>
-      <div class="dashboard-bar">
-        <div>
-          <p class="dashboard-label">Signed in as</p>
-          <p id="signed-in-email" class="signed-in-email"></p>
-        </div>
-        <button id="sign-out" class="text-button" type="button">Sign out</button>
-      </div>
-
-      <div class="dashboard-tabs" role="tablist" aria-label="Artist dashboard sections">
-        <button id="gallery-dashboard-tab" class="dashboard-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="gallery-dashboard-panel">
-          Gallery manager
-        </button>
-        <button id="commission-dashboard-tab" class="dashboard-tab" type="button" role="tab" aria-selected="false" aria-controls="commission-dashboard-panel">
-          Commission inbox
-          <span id="commission-new-count" class="dashboard-tab-count" hidden>0</span>
-        </button>
-      </div>
-
-      <div id="gallery-dashboard-panel" class="dashboard-panel" role="tabpanel" aria-labelledby="gallery-dashboard-tab">
-        <div class="dashboard-grid">
-          <section class="upload-panel" aria-labelledby="upload-title">
-            <div class="panel-intro">
-              <p class="eyebrow">New work</p>
-              <h3 id="upload-title">Upload artwork</h3>
-            </div>
-
-            <form id="upload-form" class="stack-form">
-              <label id="file-drop-zone" class="file-drop-zone" for="artwork-file">
-                <input id="artwork-file" name="file" type="file" accept="image/*" required>
-                <span class="upload-symbol" aria-hidden="true">↑</span>
-                <strong>Click to choose an image</strong>
-                <span>or drag it here · JPG, PNG, WebP, GIF · maximum 6 MB</span>
-                <img id="upload-preview" alt="Selected artwork preview" hidden>
-              </label>
-
-              <label>
-                Title
-                <input id="artwork-title" name="title" type="text" maxlength="100" required placeholder="Artwork title">
-              </label>
-
-              <label>
-                Category
-                <select id="artwork-category" name="category" required>
-                  <option value="Illustration">Illustration</option>
-                  <option value="Character">Character</option>
-                  <option value="Environment">Environment</option>
-                  <option value="Sketch">Sketch</option>
-                  <option value="Concept">Concept</option>
-                  <option value="Other">Other</option>
-                </select>
-              </label>
-
-              <label>
-                Description <span class="optional">optional</span>
-                <textarea id="artwork-description" name="description" rows="4" maxlength="600" placeholder="A little about this piece…"></textarea>
-              </label>
-
-              <button id="upload-button" class="button full-button" type="submit">Publish artwork</button>
-              <p id="upload-status" class="form-status" role="status"></p>
-            </form>
-          </section>
-
-          <section class="manage-panel" aria-labelledby="manage-title">
-            <div class="panel-intro manage-heading">
-              <div>
-                <p class="eyebrow">Published work</p>
-                <h3 id="manage-title">Manage gallery</h3>
-              </div>
-              <span id="manage-count" class="count-pill">0</span>
-            </div>
-            <div id="manage-list" class="manage-list"></div>
-          </section>
-        </div>
-      </div>
-
-      <section id="commission-dashboard-panel" class="dashboard-panel commission-inbox-panel" role="tabpanel" aria-labelledby="commission-dashboard-tab" hidden>
-        <div class="commission-inbox-heading">
-          <div>
-            <p class="eyebrow">Private messages</p>
-            <h3>Commission inbox</h3>
-            <p>Only the authorized artist account can read or update these requests.</p>
-          </div>
-          <div class="commission-inbox-tools">
-            <label>
-              Show
-              <select id="commission-status-filter">
-                <option value="all">All requests</option>
-                <option value="new">New</option>
-                <option value="reviewing">Reviewing</option>
-                <option value="accepted">Accepted</option>
-                <option value="in_progress">In progress</option>
-                <option value="completed">Completed</option>
-                <option value="declined">Declined</option>
-                <option value="archived">Archived</option>
-              </select>
-            </label>
-            <button id="refresh-commissions" class="small-button" type="button">Refresh inbox</button>
-          </div>
-        </div>
-
-        <div id="commission-inbox-loading" class="state-card" hidden>Loading private commission messages…</div>
-        <div id="commission-inbox-empty" class="state-card" hidden>No commission requests match this view.</div>
-        <div id="commission-inbox-error" class="state-card error-state" hidden></div>
-        <div id="commission-inbox-list" class="commission-inbox-list"></div>
-      </section>
-    </section>
-  </dialog>
-
-  <dialog id="edit-dialog" class="edit-dialog" aria-labelledby="edit-title">
-    <div class="dialog-header compact-header">
-      <div>
-        <p class="eyebrow">Update details</p>
-        <h2 id="edit-title">Edit artwork</h2>
-      </div>
-      <button id="close-edit" class="icon-button" type="button" aria-label="Close edit form">×</button>
+    <div class="sound-source">
+      <p>SOUND SOURCE // LIVE FEED</p>
+      <div id="youtube-player"></div>
     </div>
-    <form id="edit-form" class="stack-form">
-      <input id="edit-id" type="hidden">
-      <label>
-        Title
-        <input id="edit-artwork-title" type="text" maxlength="100" required>
-      </label>
-      <label>
-        Category
-        <select id="edit-artwork-category" required>
-          <option value="Illustration">Illustration</option>
-          <option value="Character">Character</option>
-          <option value="Environment">Environment</option>
-          <option value="Sketch">Sketch</option>
-          <option value="Concept">Concept</option>
-          <option value="Other">Other</option>
-        </select>
-      </label>
-      <label>
-        Description <span class="optional">optional</span>
-        <textarea id="edit-artwork-description" rows="5" maxlength="600"></textarea>
-      </label>
-      <button id="save-edit" class="button full-button" type="submit">Save changes</button>
-      <p id="edit-status" class="form-status" role="status"></p>
-    </form>
-  </dialog>
+  </div>
 
-  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <div class="corner-dog-tag" aria-hidden="true">
+    <span>BERNESE</span>
+    <strong>MOUNTAIN</strong>
+    <span>WEB DOG</span>
+  </div>
 </body>
 </html>
