@@ -18,51 +18,66 @@
   }
 
   const db = window.supabase.createClient(CONFIG.supabaseUrl, CONFIG.supabaseKey, {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
-      detectSessionInUrl: false
-    }
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
   });
 
   const $ = (selector) => document.querySelector(selector);
   const elements = {
-    year: $("#year"),
-    menuButton: $(".menu-button"),
-    nav: $("#site-nav"),
-    form: $("#commission-request-form"),
-    formStatus: $("#commission-form-status"),
-    submitButton: $("#submit-commission"),
-    startedAt: $("#form-started-at"),
-    paymentClaim: $("#payment-claim"),
-    paymentDetails: $("#payment-details"),
-    success: $("#commission-success"),
-    reference: $("#commission-reference"),
+    year: $("#year"), menuButton: $(".menu-button"), nav: $("#site-nav"),
+    form: $("#commission-request-form"), formStatus: $("#commission-form-status"),
+    submitButton: $("#submit-commission"), startedAt: $("#form-started-at"),
+    paymentClaim: $("#payment-claim"), paymentDetails: $("#payment-details"),
+    success: $("#commission-success"), reference: $("#commission-reference"),
     newRequest: $("#new-commission-request")
   };
 
-  function resetStartedAt() {
-    elements.startedAt.value = String(Date.now());
-  }
-
+  function resetStartedAt() { elements.startedAt.value = String(Date.now()); }
   function setStatus(message = "", type = "") {
     elements.formStatus.textContent = message;
     elements.formStatus.className = `form-status${type ? ` is-${type}` : ""}`;
   }
-
   function setBusy(busy) {
     elements.submitButton.disabled = busy;
     elements.submitButton.textContent = busy ? "Sending securely…" : "Send private request";
   }
-
   function updatePaymentFields() {
     const paidClaimed = elements.paymentClaim.value === "already_paid";
     elements.paymentDetails.hidden = !paidClaimed;
+    elements.form.elements.paymentMethod.required = paidClaimed;
+    elements.form.elements.paymentReference.required = paidClaimed;
+  }
 
-    const method = elements.form.elements.paymentMethod;
-    const reference = elements.form.elements.paymentReference;
-    method.required = paidClaimed;
-    reference.required = paidClaimed;
+  // The form uses human-readable option values, while the deployed Supabase
+  // function expects its older normalized enum values. Convert them here so
+  // the public form and backend remain compatible.
+  function normalizeContactMethod(value) {
+    const key = value.trim().toLowerCase();
+    return { email: "email", discord: "discord", instagram: "instagram", bluesky: "other", other: "other" }[key] || "";
+  }
+  function normalizeCommissionType(value) {
+    const key = value.trim().toLowerCase();
+    return {
+      "headshot": "character",
+      "half body": "character",
+      "knee up": "character",
+      "full body": "character",
+      "emote or sticker": "illustration",
+      "reference sheet": "reference_sheet",
+      "vrc retexture": "concept",
+      "character design": "concept",
+      "animation meme": "illustration",
+      "other": "other"
+    }[key] || "";
+  }
+  function normalizeUsageType(value) {
+    const key = value.trim().toLowerCase();
+    return {
+      "personal use": "personal",
+      "profile / social media": "personal",
+      "streaming / content creation": "personal",
+      "commercial use": "commercial",
+      "not sure yet": "unsure"
+    }[key] || "";
   }
 
   function collectPayload() {
@@ -70,10 +85,10 @@
     return {
       name: String(data.get("name") || "").trim(),
       email: String(data.get("email") || "").trim(),
-      contactMethod: String(data.get("contactMethod") || "").trim(),
+      contactMethod: normalizeContactMethod(String(data.get("contactMethod") || "")),
       contactHandle: String(data.get("contactHandle") || "").trim(),
-      commissionType: String(data.get("commissionType") || "").trim(),
-      usageType: String(data.get("usageType") || "").trim(),
+      commissionType: normalizeCommissionType(String(data.get("commissionType") || "")),
+      usageType: normalizeUsageType(String(data.get("usageType") || "")),
       budget: String(data.get("budget") || "").trim(),
       deadline: String(data.get("deadline") || "").trim(),
       message: String(data.get("message") || "").trim(),
@@ -99,9 +114,7 @@
     }
 
     setBusy(true);
-    const { data, error } = await db.functions.invoke(CONFIG.functionName, {
-      body: collectPayload()
-    });
+    const { data, error } = await db.functions.invoke(CONFIG.functionName, { body: collectPayload() });
     setBusy(false);
 
     if (error) {
@@ -112,9 +125,7 @@
           const body = await context.clone().json();
           if (body?.error) message = body.error;
         }
-      } catch {
-        // Use the original error message.
-      }
+      } catch {}
       setStatus(message, "error");
       return;
     }
@@ -145,17 +156,14 @@
   elements.year.textContent = String(new Date().getFullYear());
   resetStartedAt();
   updatePaymentFields();
-
   elements.paymentClaim.addEventListener("change", updatePaymentFields);
   elements.form.addEventListener("submit", submitRequest);
   elements.newRequest.addEventListener("click", startNewRequest);
-
   elements.menuButton.addEventListener("click", () => {
     const open = elements.menuButton.getAttribute("aria-expanded") === "true";
     elements.menuButton.setAttribute("aria-expanded", String(!open));
     elements.nav.classList.toggle("is-open", !open);
   });
-
   elements.nav.addEventListener("click", (event) => {
     if (event.target.closest("a")) {
       elements.menuButton.setAttribute("aria-expanded", "false");
