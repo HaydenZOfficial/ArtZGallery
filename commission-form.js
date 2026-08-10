@@ -47,56 +47,26 @@
     elements.form.elements.paymentReference.required = paidClaimed;
   }
 
-  // The form uses human-readable option values, while the deployed Supabase
-  // function expects its older normalized enum values. Convert them here so
-  // the public form and backend remain compatible.
-  function normalizeContactMethod(value) {
-    const key = value.trim().toLowerCase();
-    return { email: "email", discord: "discord", instagram: "instagram", bluesky: "other", other: "other" }[key] || "";
-  }
-  function normalizeCommissionType(value) {
-    const key = value.trim().toLowerCase();
-    return {
-      "headshot": "character",
-      "half body": "character",
-      "knee up": "character",
-      "full body": "character",
-      "emote or sticker": "illustration",
-      "reference sheet": "reference_sheet",
-      "vrc retexture": "concept",
-      "character design": "concept",
-      "animation meme": "illustration",
-      "other": "other"
-    }[key] || "";
-  }
-  function normalizeUsageType(value) {
-    const key = value.trim().toLowerCase();
-    return {
-      "personal use": "personal",
-      "profile / social media": "personal",
-      "streaming / content creation": "personal",
-      "commercial use": "commercial",
-      "not sure yet": "unsure"
-    }[key] || "";
-  }
-
+  // Temporary unrestricted mode: submit the values exactly as entered.
+  // The backend may still reject requests if its own server-side validation
+  // is enabled, but the browser will not perform contact/content validation.
   function collectPayload() {
     const data = new FormData(elements.form);
     return {
-      name: String(data.get("name") || "").trim(),
-      email: String(data.get("email") || "").trim(),
-      contactMethod: normalizeContactMethod(String(data.get("contactMethod") || "")),
-      contactHandle: String(data.get("contactHandle") || "").trim(),
-      commissionType: normalizeCommissionType(String(data.get("commissionType") || "")),
-      usageType: normalizeUsageType(String(data.get("usageType") || "")),
-      budget: String(data.get("budget") || "").trim(),
-      deadline: String(data.get("deadline") || "").trim(),
-      message: String(data.get("message") || "").trim(),
-      referenceLinks: String(data.get("referenceLinks") || "").trim(),
-      paymentClaim: String(data.get("paymentClaim") || "").trim(),
-      paymentMethod: String(data.get("paymentMethod") || "").trim(),
-      paymentReference: String(data.get("paymentReference") || "").trim(),
-      website: String(data.get("website") || "").trim(),
+      name: String(data.get("name") || ""),
+      email: String(data.get("email") || ""),
+      contactMethod: String(data.get("contactMethod") || ""),
+      contactHandle: String(data.get("contactHandle") || ""),
+      commissionType: String(data.get("commissionType") || ""),
+      usageType: String(data.get("usageType") || ""),
+      budget: String(data.get("budget") || ""),
+      deadline: String(data.get("deadline") || ""),
+      message: String(data.get("message") || ""),
+      referenceLinks: String(data.get("referenceLinks") || ""),
+      paymentClaim: String(data.get("paymentClaim") || ""),
+      paymentMethod: String(data.get("paymentMethod") || ""),
+      paymentReference: String(data.get("paymentReference") || ""),
+      website: String(data.get("website") || ""),
       startedAt: Number(data.get("startedAt") || 0)
     };
   }
@@ -104,7 +74,9 @@
   async function submitRequest(event) {
     event.preventDefault();
     setStatus();
-    if (!elements.form.reportValidity()) return;
+
+    // Do not call reportValidity(). Browser-side field validation is disabled
+    // for this temporary unrestricted commission form.
 
     const lastSent = Number(localStorage.getItem("hadenzCommissionLastSent") || 0);
     const waitMs = CONFIG.localCooldownMs - (Date.now() - lastSent);
