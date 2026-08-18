@@ -16,6 +16,37 @@
   <noscript><p><a href="gallery-core.html">Open the HadenZ gallery</a></p></noscript>
   <script src="/music-enhancer.js" defer></script>
   <script src="/newsletter.js" defer></script>
-  <script src="/queue-nav.js?v=1" defer></script>
+  <script src="/queue-nav.js?v=2" defer></script>
+  <script>
+    (() => {
+      const frame = document.getElementById('gallery-frame');
+      function installQueueButton() {
+        const doc = frame && frame.contentDocument;
+        const nav = doc && doc.querySelector('.nav-links');
+        if (!nav || nav.querySelector('[data-queue-link]')) return !!nav;
+        const link = doc.createElement('a');
+        link.className = 'nav-link';
+        link.href = '/queue/';
+        link.dataset.queueLink = 'true';
+        link.dataset.navTheme = 'commission';
+        link.dataset.navWord = 'QUEUE';
+        link.innerHTML = '<span class="nav-number">04</span><span class="nav-label">Commission Queue <small style="color:#9cffcf;font-size:.5em;letter-spacing:.12em">LIVE</small></span><span class="nav-arrow">↗</span>';
+        const commissions = nav.querySelector('a[href="/comissions/"]');
+        if (commissions) commissions.after(link); else nav.appendChild(link);
+        nav.querySelectorAll('.nav-link').forEach((item, i) => {
+          const n = item.querySelector('.nav-number');
+          if (n) n.textContent = String(i + 1).padStart(2, '0');
+        });
+        return true;
+      }
+      function start() {
+        if (installQueueButton()) return;
+        let tries = 0;
+        const timer = setInterval(() => { if (installQueueButton() || ++tries > 40) clearInterval(timer); }, 250);
+      }
+      frame.addEventListener('load', start);
+      start();
+    })();
+  </script>
 </body>
 </html>
