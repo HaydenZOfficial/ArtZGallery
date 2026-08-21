@@ -9,8 +9,65 @@
   function setStatus(message="",type=""){elements.formStatus.textContent=message;elements.formStatus.className=`form-status${type?` is-${type}`:""}`;}
   function setBusy(busy){elements.submitButton.disabled=busy;elements.submitButton.textContent=busy?"Sending securely…":"Send private request";}
   function updatePaymentFields(){const paidClaimed=elements.paymentClaim.value==="already_paid";elements.paymentDetails.hidden=!paidClaimed;elements.form.elements.paymentMethod.required=paidClaimed;elements.form.elements.paymentReference.required=paidClaimed;}
+
+  function updateCommissionPrices(){
+    const cards=[...document.querySelectorAll(".pricing-grid .price-file")];
+    const pricing=[
+      {name:"Headshot",description:"Portrait focus",footer:"FACE / BUST",prices:["$15","$25","$30","$40"]},
+      {name:"Half Body",description:"Waist-up composition",footer:"WAIST / UP",prices:["$20","$30","$40","$50"]},
+      {name:"Full Body",description:"Complete character art",footer:"FULL / FRAME",prices:["$25","$40","$50","$80"]}
+    ];
+    pricing.forEach((item,index)=>{
+      const card=cards[index];
+      if(!card)return;
+      const title=card.querySelector("h3");
+      const description=card.querySelector("header b");
+      const values=[...card.querySelectorAll("dl dd")];
+      const footer=card.querySelector("footer span");
+      if(title)title.textContent=item.name;
+      if(description)description.textContent=item.description;
+      values.forEach((value,i)=>{if(item.prices[i])value.textContent=item.prices[i];});
+      if(footer)footer.textContent=item.footer;
+    });
+
+    const referenceCard=cards[3];
+    if(referenceCard){
+      const title=referenceCard.querySelector("h3");
+      const description=referenceCard.querySelector("header b");
+      const dl=referenceCard.querySelector("dl");
+      const footer=referenceCard.querySelector("footer span");
+      if(title)title.textContent="Reference Sheet";
+      if(description)description.textContent="Character reference package";
+      if(dl)dl.innerHTML='<div><dt>Price range</dt><dd>$35–$100</dd></div>';
+      if(footer)footer.textContent="REFERENCE / SHEET";
+    }
+
+    const specialty=document.querySelector(".specialty-strip");
+    if(specialty){
+      specialty.innerHTML='<div><span>EXTRA / A</span><strong>Emote</strong><b>$15–$20</b></div>';
+    }
+  }
+
+  function updateCommissionTypeOptions(){
+    const select=elements.form?.elements.commissionType;
+    if(!select)return;
+    const current=select.value;
+    select.innerHTML='<option value="">Select a service</option><option value="Headshot">Headshot</option><option value="Half Body">Half Body</option><option value="Full Body">Full Body</option><option value="Emote">Emote</option><option value="Reference Sheet">Reference Sheet</option><option value="Other">Other / custom request</option>';
+    if([...select.options].some(option=>option.value===current))select.value=current;
+  }
+
   function collectPayload(){const data=new FormData(elements.form);return {name:String(data.get("name")||""),email:String(data.get("email")||""),contactMethod:String(data.get("contactMethod")||""),contactHandle:String(data.get("contactHandle")||""),commissionType:String(data.get("commissionType")||""),usageType:String(data.get("usageType")||""),budget:String(data.get("budget")||""),deadline:String(data.get("deadline")||""),message:String(data.get("message")||""),referenceLinks:String(data.get("referenceLinks")||""),paymentClaim:String(data.get("paymentClaim")||""),paymentMethod:String(data.get("paymentMethod")||""),paymentReference:String(data.get("paymentReference")||""),website:String(data.get("website")||""),startedAt:Number(data.get("startedAt")||0)};}
   async function submitRequest(event){event.preventDefault();setStatus();setBusy(true);const {data,error}=await db.functions.invoke(CONFIG.functionName,{body:collectPayload()});setBusy(false);if(error){let message=error.message||"The request could not be delivered.";try{const context=error.context;if(context instanceof Response){const body=await context.clone().json();if(body?.error)message=body.error;}}catch{}setStatus(message,"error");return;}if(!data?.referenceCode){setStatus("The server did not return a reference number. Please try again.","error");return;}elements.reference.textContent=data.referenceCode;elements.form.hidden=true;elements.success.hidden=false;elements.success.scrollIntoView({behavior:"smooth",block:"center"});}
-  function startNewRequest(){elements.form.reset();updatePaymentFields();resetStartedAt();setStatus();elements.success.hidden=true;elements.form.hidden=false;elements.form.scrollIntoView({behavior:"smooth",block:"start"});elements.form.elements.name.focus();}
-  elements.year.textContent=String(new Date().getFullYear());resetStartedAt();updatePaymentFields();elements.paymentClaim.addEventListener("change",updatePaymentFields);elements.form.addEventListener("submit",submitRequest);elements.newRequest.addEventListener("click",startNewRequest);elements.menuButton.addEventListener("click",()=>{const open=elements.menuButton.getAttribute("aria-expanded")==="true";elements.menuButton.setAttribute("aria-expanded",String(!open));elements.nav.classList.toggle("is-open",!open);});elements.nav.addEventListener("click",event=>{if(event.target.closest("a")){elements.menuButton.setAttribute("aria-expanded","false");elements.nav.classList.remove("is-open");}});
+  function startNewRequest(){elements.form.reset();updateCommissionTypeOptions();updatePaymentFields();resetStartedAt();setStatus();elements.success.hidden=true;elements.form.hidden=false;elements.form.scrollIntoView({behavior:"smooth",block:"start"});elements.form.elements.name.focus();}
+
+  elements.year.textContent=String(new Date().getFullYear());
+  resetStartedAt();
+  updateCommissionPrices();
+  updateCommissionTypeOptions();
+  updatePaymentFields();
+  elements.paymentClaim.addEventListener("change",updatePaymentFields);
+  elements.form.addEventListener("submit",submitRequest);
+  elements.newRequest.addEventListener("click",startNewRequest);
+  elements.menuButton.addEventListener("click",()=>{const open=elements.menuButton.getAttribute("aria-expanded")==="true";elements.menuButton.setAttribute("aria-expanded",String(!open));elements.nav.classList.toggle("is-open",!open);});
+  elements.nav.addEventListener("click",event=>{if(event.target.closest("a")){elements.menuButton.setAttribute("aria-expanded","false");elements.nav.classList.remove("is-open");}});
 })();
